@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XLWebBrowser", "XLWebBrowser\XLWebBrowser.vcproj", "{9453BB79-DB23-4ABD-9C4E-1CEC868D1BC7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BrowserIPC", "BrowserIPC\BrowserIPC.vcproj", "{AA140449-2B56-4796-88EC-75EF7B879B30}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test1", "Test1\Test1.vcproj", "{965AEC6A-4E20-45AF-804A-AC16D4DED47E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA140449-2B56-4796-88EC-75EF7B879B30} = {AA140449-2B56-4796-88EC-75EF7B879B30}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test2", "Test2\Test2.vcproj", "{FFB34568-FFD6-4F69-8A7C-22E03B737051}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA140449-2B56-4796-88EC-75EF7B879B30} = {AA140449-2B56-4796-88EC-75EF7B879B30}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9453BB79-DB23-4ABD-9C4E-1CEC868D1BC7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9453BB79-DB23-4ABD-9C4E-1CEC868D1BC7}.Debug|Win32.Build.0 = Debug|Win32
+		{9453BB79-DB23-4ABD-9C4E-1CEC868D1BC7}.Release|Win32.ActiveCfg = Release|Win32
+		{9453BB79-DB23-4ABD-9C4E-1CEC868D1BC7}.Release|Win32.Build.0 = Release|Win32
+		{AA140449-2B56-4796-88EC-75EF7B879B30}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AA140449-2B56-4796-88EC-75EF7B879B30}.Debug|Win32.Build.0 = Debug|Win32
+		{AA140449-2B56-4796-88EC-75EF7B879B30}.Release|Win32.ActiveCfg = Release|Win32
+		{AA140449-2B56-4796-88EC-75EF7B879B30}.Release|Win32.Build.0 = Release|Win32
+		{965AEC6A-4E20-45AF-804A-AC16D4DED47E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{965AEC6A-4E20-45AF-804A-AC16D4DED47E}.Debug|Win32.Build.0 = Debug|Win32
+		{965AEC6A-4E20-45AF-804A-AC16D4DED47E}.Release|Win32.ActiveCfg = Release|Win32
+		{965AEC6A-4E20-45AF-804A-AC16D4DED47E}.Release|Win32.Build.0 = Release|Win32
+		{FFB34568-FFD6-4F69-8A7C-22E03B737051}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FFB34568-FFD6-4F69-8A7C-22E03B737051}.Debug|Win32.Build.0 = Debug|Win32
+		{FFB34568-FFD6-4F69-8A7C-22E03B737051}.Release|Win32.ActiveCfg = Release|Win32
+		{FFB34568-FFD6-4F69-8A7C-22E03B737051}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
