@@ -1,0 +1,56 @@
+// XLWebBrowser.idl : IDL source for XLWebBrowser
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (XLWebBrowser.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(B6F6F890-F5AD-4EF5-BBDB-0296451B19CA),
+	dual,
+	nonextensible,
+	helpstring("IXLMSWebBrowser Interface"),
+	pointer_default(unique)
+]
+interface IXLMSWebBrowser : IDispatch{
+	[id(1), helpstring("method Navigate")] HRESULT Navigate([in] BSTR url);
+};
+[
+	object,
+	uuid(117BEDB4-5D5F-473B-B62B-8626969C252C),
+	dual,
+	nonextensible,
+	helpstring("IXLWebBrowserManager Interface"),
+	pointer_default(unique)
+]
+interface IXLWebBrowserManager : IDispatch{
+	[id(1), helpstring("method CreateBrowser")] HRESULT CreateBrowser([in] LONG dwProcessID, [in] LONG hParentWnd, [in] IXLMSWebBrowser** ppMSWebBrowser);
+};
+[
+	uuid(73D0FE0C-D823-4246-932E-C38F8E845C70),
+	version(1.0),
+	helpstring("XLWebBrowser 1.0 Type Library")
+]
+library XLWebBrowserLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(6FBC42AA-D5FC-456E-B987-0ACFA3966342),
+		helpstring("XLWebBrowserManager Class")
+	]
+	coclass XLWebBrowserManager
+	{
+		[default] interface IXLWebBrowserManager;
+	};
+	[
+		uuid(A70B5658-96B6-4B15-BD8C-F7FB2391BE51),
+		helpstring("XLMSWebBrowser Class")
+	]
+	coclass XLMSWebBrowser
+	{
+		[default] interface IXLMSWebBrowser;
+	};
+};

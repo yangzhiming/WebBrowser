@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MsgRoutine", "MsgRoutine\MsgRoutine.vcproj", "{FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XLGameBrowser", "XLGameBrowser\XLGameBrowser.vcproj", "{D6DA5AE9-8034-470D-ABBD-8B90541D68EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{212A163A-3CC8-437E-95F8-07E77AD7A9DF} = {212A163A-3CC8-437E-95F8-07E77AD7A9DF}
+		{FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7} = {FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XLWebBrowser", "XLWebBrowser\XLWebBrowser.vcproj", "{E6F61287-971B-495C-B3A9-72D8C941FB06}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BrowserProtocol", "BrowserProtocol\BrowserProtocol.vcproj", "{212A163A-3CC8-437E-95F8-07E77AD7A9DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDFF68C7-058A-4E1D-B7D2-EDA64885DF15}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestXLWebBrowser", "TestXLWebBrowser\TestXLWebBrowser.vcproj", "{10A0D6D6-8545-47FB-8152-85B40D09593E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{212A163A-3CC8-437E-95F8-07E77AD7A9DF} = {212A163A-3CC8-437E-95F8-07E77AD7A9DF}
+		{E6F61287-971B-495C-B3A9-72D8C941FB06} = {E6F61287-971B-495C-B3A9-72D8C941FB06}
+		{D6DA5AE9-8034-470D-ABBD-8B90541D68EB} = {D6DA5AE9-8034-470D-ABBD-8B90541D68EB}
+		{FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7} = {FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7}.Debug|Win32.Build.0 = Debug|Win32
+		{FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7}.Release|Win32.ActiveCfg = Release|Win32
+		{FDCD2DF2-C76C-41B0-8AFA-4183BC3168D7}.Release|Win32.Build.0 = Release|Win32
+		{D6DA5AE9-8034-470D-ABBD-8B90541D68EB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6DA5AE9-8034-470D-ABBD-8B90541D68EB}.Debug|Win32.Build.0 = Debug|Win32
+		{D6DA5AE9-8034-470D-ABBD-8B90541D68EB}.Release|Win32.ActiveCfg = Release|Win32
+		{D6DA5AE9-8034-470D-ABBD-8B90541D68EB}.Release|Win32.Build.0 = Release|Win32
+		{E6F61287-971B-495C-B3A9-72D8C941FB06}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E6F61287-971B-495C-B3A9-72D8C941FB06}.Debug|Win32.Build.0 = Debug|Win32
+		{E6F61287-971B-495C-B3A9-72D8C941FB06}.Release|Win32.ActiveCfg = Release|Win32
+		{E6F61287-971B-495C-B3A9-72D8C941FB06}.Release|Win32.Build.0 = Release|Win32
+		{212A163A-3CC8-437E-95F8-07E77AD7A9DF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{212A163A-3CC8-437E-95F8-07E77AD7A9DF}.Debug|Win32.Build.0 = Debug|Win32
+		{212A163A-3CC8-437E-95F8-07E77AD7A9DF}.Release|Win32.ActiveCfg = Release|Win32
+		{212A163A-3CC8-437E-95F8-07E77AD7A9DF}.Release|Win32.Build.0 = Release|Win32
+		{10A0D6D6-8545-47FB-8152-85B40D09593E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{10A0D6D6-8545-47FB-8152-85B40D09593E}.Debug|Win32.Build.0 = Debug|Win32
+		{10A0D6D6-8545-47FB-8152-85B40D09593E}.Release|Win32.ActiveCfg = Release|Win32
+		{10A0D6D6-8545-47FB-8152-85B40D09593E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

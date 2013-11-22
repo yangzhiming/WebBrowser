@@ -1,0 +1,26 @@
+HKCR
+{
+	XLWebBrowser.XLWebBrowserManager.1 = s 'XLWebBrowserManager Class'
+	{
+		CLSID = s '{6FBC42AA-D5FC-456E-B987-0ACFA3966342}'
+	}
+	XLWebBrowser.XLWebBrowserManager = s 'XLWebBrowserManager Class'
+	{
+		CLSID = s '{6FBC42AA-D5FC-456E-B987-0ACFA3966342}'
+		CurVer = s 'XLWebBrowser.XLWebBrowserManager.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6FBC42AA-D5FC-456E-B987-0ACFA3966342} = s 'XLWebBrowserManager Class'
+		{
+			ProgID = s 'XLWebBrowser.XLWebBrowserManager.1'
+			VersionIndependentProgID = s 'XLWebBrowser.XLWebBrowserManager'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{73D0FE0C-D823-4246-932E-C38F8E845C70}'
+		}
+	}
+}
