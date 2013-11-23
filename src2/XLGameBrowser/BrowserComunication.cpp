@@ -88,12 +88,21 @@ void BrowserComunication::RemoveEventHandler(IEventHandler* lpHandler)
 	}
 }
 
-void BrowserComunication::Fire_OnNavigate(LPCTSTR strUrl)
+void BrowserComunication::Fire_OnNavigate(DWORD dwToThreadID, LPCTSTR strUrl)
 {
 	std::list<IEventHandler*>::iterator it = m_HandlerList.begin();
 	for(; it != m_HandlerList.end(); ++it)
 	{
-		(*it)->OnNavigate(strUrl);
+		(*it)->OnNavigate(dwToThreadID, strUrl);
+	}
+}
+
+void BrowserComunication::Fire_OnCreateAndNavigate(HWND hParentWnd, LPCTSTR strUrl, DWORD dwMark)
+{
+	std::list<IEventHandler*>::iterator it = m_HandlerList.begin();
+	for(; it != m_HandlerList.end(); ++it)
+	{
+		(*it)->OnCreateAndNavigate(hParentWnd, strUrl, dwMark);
 	}
 }
 
@@ -116,11 +125,12 @@ long BrowserComunication::NotifyHostProcessCreated()
 }
 
 //此函数是在浏览器线程通知出来，所以直接GetCurrentThreadId没问题
-long BrowserComunication::NotifyHostBrowserCreated()
+long BrowserComunication::NotifyHostBrowserCreated(DWORD dwMark)
 {
 	DWORD dwThreadID = ::GetCurrentThreadId();
 	BrowserCreatedPackage* lpPackage = new BrowserCreatedPackage();
 	lpPackage->m_dwBrowserThreadID = dwThreadID;
+	lpPackage->m_dwMark = dwMark;
 	InternalSendPackage(lpPackage);
 	delete lpPackage;
 	return 0;
@@ -170,6 +180,11 @@ void BrowserComunication::OnRecvRespPackage(BasePackage* lpPackage)
 			OnNavigate(lpPackage);
 		}
 		break;
+	case XBM_MSG_CREATEANDNAVIGATE:
+		{
+			OnCreateAndNavigate(lpPackage);
+		}
+		break;
 	default:
 		assert(false);
 		break;
@@ -178,13 +193,20 @@ void BrowserComunication::OnRecvRespPackage(BasePackage* lpPackage)
 	delete lpPackage;
 }
 
-HWND g_hWnd = NULL;
 void BrowserComunication::OnNavigate(BasePackage* lpPackage)
 {
 	NavigatePackage* lpNavigatePackage = dynamic_cast<NavigatePackage*>(lpPackage);
 	assert(lpNavigatePackage);
 
 	std::string strUrl = lpNavigatePackage->m_strUrl;
-	g_hWnd = lpNavigatePackage->m_hParentWnd;
-	Fire_OnNavigate(CString(strUrl.c_str()));
+	DWORD dwToThreadID = lpNavigatePackage->m_dwThreadID;
+	Fire_OnNavigate(dwToThreadID, CString(strUrl.c_str()));
+}
+
+void BrowserComunication::OnCreateAndNavigate(BasePackage* lpPackage)
+{
+	CreateAndNavigatePackage* lpChildPackage = dynamic_cast<CreateAndNavigatePackage*>(lpPackage);
+	assert(lpChildPackage);
+
+	Fire_OnCreateAndNavigate(lpChildPackage->m_hParentWnd, CString(lpChildPackage->m_strUrl.c_str()), lpChildPackage->m_dwMark);
 }

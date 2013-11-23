@@ -31,11 +31,14 @@ public:
 
 public:
 
+	void SetMark(DWORD dwMark);
 	HWND CreateBrowserWnd(HWND hOwner);
-
 	HRESULT Navigate(LPCTSTR pstrUrl,int nFlag = 0,LPCTSTR pTargetName = NULL,LPCTSTR pPostData = NULL,LPCTSTR pHeader = NULL);
 
 private:
 
 	HRESULT GetBrowser(IWebBrowser2** ppWebBrowser);
+
+private:
+	DWORD m_dwMark;
 };

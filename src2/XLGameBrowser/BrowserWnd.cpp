@@ -4,10 +4,16 @@
 
 BrowserWnd::BrowserWnd(void)
 {
+	m_dwMark = 0;
 }
 
 BrowserWnd::~BrowserWnd(void)
 {
+}
+
+void BrowserWnd::SetMark(DWORD dwMark)
+{
+	m_dwMark = dwMark;
 }
 
 HWND BrowserWnd::CreateBrowserWnd(HWND hOwner)
@@ -82,7 +88,7 @@ int BrowserWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//操！这条还是必须的
 	SetMsgHandled(FALSE);
 
-	BrowserComunication::Instance()->NotifyHostBrowserCreated();
+	BrowserComunication::Instance()->NotifyHostBrowserCreated(m_dwMark);
 
 	SetTimer(12345, 50, NULL);
 	return 0;

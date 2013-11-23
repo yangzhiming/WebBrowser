@@ -17,6 +17,7 @@ import "ocidl.idl";
 ]
 interface IXLMSWebBrowser : IDispatch{
 	[id(1), helpstring("method Navigate")] HRESULT Navigate([in] BSTR url);
+	[id(2), helpstring("方法Destroy")] HRESULT Destroy(void);
 };
 [
 	object,
@@ -28,6 +29,8 @@ interface IXLMSWebBrowser : IDispatch{
 ]
 interface IXLWebBrowserManager : IDispatch{
 	[id(1), helpstring("method CreateBrowser")] HRESULT CreateBrowser([in] LONG dwProcessID, [in] LONG hParentWnd, [in] IXLMSWebBrowser** ppMSWebBrowser);
+	[id(2), helpstring("方法DestroyBrowser2")] HRESULT DestroyBrowser2([in] LONG dwProcessID, [in] LONG dwThreadID);
+	[id(3), helpstring("方法DestroyBrowser")] HRESULT DestroyBrowser([in] IXLMSWebBrowser* pMSWebBrowser);
 };
 [
 	uuid(73D0FE0C-D823-4246-932E-C38F8E845C70),

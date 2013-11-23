@@ -46,17 +46,21 @@ END_COM_MAP()
 public:
 	DWORD GetBrowserProcessID() const;
 	DWORD GetBrowserThreadID() const;
+	DWORD GetMarkCookie() const;
 
 	virtual BOOL Create(LONG dwProcessID, HWND hParentWnd);
 	virtual void OnProcessCreated();
-	virtual void OnBrowserCreated();
+	virtual void OnBrowserCreated(DWORD dwThreadID);
 
 private:
 	BOOL CreateNewBrowserProcess(HWND hParentWnd);
 	BOOL CreateBrowserInProcess(LONG dwProcessID, HWND hParentWnd);
 
+	static long GetNextMarkCookie();
+
 public:
 	STDMETHOD(Navigate)(BSTR url);
+	STDMETHOD(Destroy)(void);
 
 private:
 	HWND m_hParentWnd;
@@ -65,6 +69,8 @@ private:
 	BrowserState m_dwState;
 	BOOL m_bDelayNavigate;
 	CString m_strToNavigate;
+	DWORD m_dwMark;
+	static unsigned long	m_nextTaskCookie;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(XLMSWebBrowser), CXLMSWebBrowser)

@@ -1,11 +1,13 @@
 #pragma once
 #include "baseuserpackage.h"
 
-class NavigatePackage : public BasePackage
+//首次创建浏览器线程时发出。
+//NavigatePackage则是在已经创建后再需要换url时候发出.
+class CreateAndNavigatePackage : public BasePackage
 {
 public:
-	NavigatePackage();
-	virtual ~NavigatePackage(void);
+	CreateAndNavigatePackage(void);
+	~CreateAndNavigatePackage(void);
 
 	virtual size_t EncodeLogicBody(BYTE* pResult,size_t len);
 	virtual size_t DecodeLogicBody(const BYTE* pBuffer,size_t len);
@@ -13,5 +15,6 @@ public:
 
 public:
 	std::string m_strUrl;
-	DWORD m_dwThreadID;
+	HWND m_hParentWnd;
+	DWORD m_dwMark;
 };

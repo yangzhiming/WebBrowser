@@ -3,7 +3,9 @@
 #include "BrowserWnd.h"
 
 BrowserThreadItem::BrowserThreadItem(void) : m_pBrowserWnd(NULL),
-								 m_hThread(NULL)
+											 m_hThread(NULL),
+											 m_hParentWnd(NULL),
+											 m_dwMark(0)
 {
 }
 
@@ -11,9 +13,11 @@ BrowserThreadItem::~BrowserThreadItem(void)
 {
 }
 
-bool BrowserThreadItem::Create(DWORD& dwThreadID, LPCTSTR strUrl)
+bool BrowserThreadItem::Create(DWORD& dwThreadID, HWND hParent, LPCTSTR strUrl, DWORD dwMark)
 {
 	m_strToNavigate = strUrl;
+	m_hParentWnd = hParent;
+	m_dwMark = dwMark;
 	m_hThread = (HANDLE)_beginthreadex(NULL, 0, BrowserWorkerThread, this, 0, (unsigned int*)&dwThreadID);
 	if(m_hThread != NULL)
 	{
@@ -37,7 +41,6 @@ bool BrowserThreadItem::Destroy()
 	return true;
 }
 
-extern HWND g_hWnd;
 unsigned int WINAPI BrowserThreadItem::BrowserWorkerThread(LPVOID param)
 {
 	HRESULT hRes = ::CoInitialize(NULL);
@@ -47,7 +50,8 @@ unsigned int WINAPI BrowserThreadItem::BrowserWorkerThread(LPVOID param)
 
 	BrowserThreadItem* lpBrowserThreadItem = (BrowserThreadItem*)param;
 	lpBrowserThreadItem->m_pBrowserWnd = new BrowserWnd();
-	lpBrowserThreadItem->m_pBrowserWnd->CreateBrowserWnd(g_hWnd);
+	lpBrowserThreadItem->m_pBrowserWnd->SetMark(lpBrowserThreadItem->m_dwMark);
+	lpBrowserThreadItem->m_pBrowserWnd->CreateBrowserWnd(lpBrowserThreadItem->m_hParentWnd);
 	lpBrowserThreadItem->m_pBrowserWnd->ShowWindow(SW_SHOW);
 	lpBrowserThreadItem->m_pBrowserWnd->Navigate(lpBrowserThreadItem->m_strToNavigate);
 

@@ -37,6 +37,34 @@ STDMETHODIMP CXLWebBrowserManager::CreateBrowser(LONG dwProcessID, LONG hParentW
 	return S_OK;
 }
 
+STDMETHODIMP CXLWebBrowserManager::DestroyBrowser(IXLMSWebBrowser* pMSWebBrowser)
+{
+	// TODO: 在此添加实现代码
+	ATLASSERT(pMSWebBrowser);
+	if(pMSWebBrowser)
+	{
+		pMSWebBrowser->Destroy();
+	}
+
+	return S_OK;
+}
+
+STDMETHODIMP CXLWebBrowserManager::DestroyBrowser2(LONG dwProcessID, LONG dwThreadID)
+{
+	// TODO: 在此添加实现代码
+	std::list<CXLMSWebBrowser*>::iterator it = m_BrowserList.begin();
+	for(; it != m_BrowserList.end(); ++it)
+	{
+		if((*it)->GetBrowserProcessID() == dwProcessID && (*it)->GetBrowserThreadID() == dwThreadID)
+		{
+			(*it)->Destroy();
+			break;
+		}
+	}
+
+	return S_OK;
+}
+
 void CXLWebBrowserManager::OnConnect()
 {
 
@@ -55,14 +83,14 @@ void CXLWebBrowserManager::OnProcessCreated(DWORD dwProcessID)
 	}
 }
 
-void CXLWebBrowserManager::OnBrowserCreated(DWORD dwProcessID, DWORD dwThreadID)
+void CXLWebBrowserManager::OnBrowserCreated(DWORD dwProcessID, DWORD dwThreadID, DWORD dwMark)
 {
 	std::list<CXLMSWebBrowser*>::iterator it = m_BrowserList.begin();
 	for(; it != m_BrowserList.end(); ++it)
 	{
-		if((*it)->GetBrowserProcessID() == dwProcessID && (*it)->GetBrowserThreadID() == dwThreadID)
+		if((*it)->GetBrowserProcessID() == dwProcessID && (*it)->GetMarkCookie() == dwMark)
 		{
-			(*it)->OnBrowserCreated();
+			(*it)->OnBrowserCreated(dwThreadID);
 			break;
 		}
 	}

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Fri Nov 22 16:18:23 2013
+/* at Sun Nov 24 02:26:13 2013
  */
 /* Compiler settings for ..\XLWebBrowser\XLWebBrowser.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -108,6 +108,8 @@ EXTERN_C const IID IID_IXLMSWebBrowser;
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Navigate( 
             /* [in] */ BSTR url) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Destroy( void) = 0;
+        
     };
     
 #else 	/* C style interface */
@@ -161,6 +163,9 @@ EXTERN_C const IID IID_IXLMSWebBrowser;
             IXLMSWebBrowser * This,
             /* [in] */ BSTR url);
         
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Destroy )( 
+            IXLMSWebBrowser * This);
+        
         END_INTERFACE
     } IXLMSWebBrowserVtbl;
 
@@ -200,6 +205,9 @@ EXTERN_C const IID IID_IXLMSWebBrowser;
 #define IXLMSWebBrowser_Navigate(This,url)	\
     ( (This)->lpVtbl -> Navigate(This,url) ) 
 
+#define IXLMSWebBrowser_Destroy(This)	\
+    ( (This)->lpVtbl -> Destroy(This) ) 
+
 #endif /* COBJMACROS */
 
 
@@ -230,6 +238,13 @@ EXTERN_C const IID IID_IXLWebBrowserManager;
             /* [in] */ LONG dwProcessID,
             /* [in] */ LONG hParentWnd,
             /* [in] */ IXLMSWebBrowser **ppMSWebBrowser) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE DestroyBrowser2( 
+            /* [in] */ LONG dwProcessID,
+            /* [in] */ LONG dwThreadID) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE DestroyBrowser( 
+            /* [in] */ IXLMSWebBrowser *pMSWebBrowser) = 0;
         
     };
     
@@ -286,6 +301,15 @@ EXTERN_C const IID IID_IXLWebBrowserManager;
             /* [in] */ LONG hParentWnd,
             /* [in] */ IXLMSWebBrowser **ppMSWebBrowser);
         
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *DestroyBrowser2 )( 
+            IXLWebBrowserManager * This,
+            /* [in] */ LONG dwProcessID,
+            /* [in] */ LONG dwThreadID);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *DestroyBrowser )( 
+            IXLWebBrowserManager * This,
+            /* [in] */ IXLMSWebBrowser *pMSWebBrowser);
+        
         END_INTERFACE
     } IXLWebBrowserManagerVtbl;
 
@@ -324,6 +348,12 @@ EXTERN_C const IID IID_IXLWebBrowserManager;
 
 #define IXLWebBrowserManager_CreateBrowser(This,dwProcessID,hParentWnd,ppMSWebBrowser)	\
     ( (This)->lpVtbl -> CreateBrowser(This,dwProcessID,hParentWnd,ppMSWebBrowser) ) 
+
+#define IXLWebBrowserManager_DestroyBrowser2(This,dwProcessID,dwThreadID)	\
+    ( (This)->lpVtbl -> DestroyBrowser2(This,dwProcessID,dwThreadID) ) 
+
+#define IXLWebBrowserManager_DestroyBrowser(This,pMSWebBrowser)	\
+    ( (This)->lpVtbl -> DestroyBrowser(This,pMSWebBrowser) ) 
 
 #endif /* COBJMACROS */
 

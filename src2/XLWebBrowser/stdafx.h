@@ -31,5 +31,6 @@
 #include <map>
 #include <list>
 #include <string>
+#include <limits>
 
 using namespace ATL;

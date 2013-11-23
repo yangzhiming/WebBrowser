@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "BrowserApp.h"
 #include "BrowserThreadManager.h"
+#include "BrowserItem.h"
+#include "BrowserWnd.h"
 
 BrowserApp::BrowserApp(void)
 {
@@ -28,7 +30,20 @@ void BrowserApp::Run()
 
 }
 
-void BrowserEventHandler::OnNavigate(LPCTSTR strUrl)
+void BrowserEventHandler::OnNavigate(DWORD dwToThreadID, LPCTSTR strUrl)
 {
-	BrowserThreadManager::Instance()->CreateBrowserThread(strUrl);
+	BrowserThreadItem* lpItem = BrowserThreadManager::Instance()->FindBrowserItem(dwToThreadID);
+	if(lpItem)
+	{
+		BrowserWnd* lpWnd = lpItem->GetBrowserWnd();
+		if(lpWnd)
+		{
+			lpWnd->Navigate(strUrl);
+		}
+	}
+}
+
+void BrowserEventHandler::OnCreateAndNavigate(HWND hParentWnd, LPCTSTR strUrl, DWORD dwMark)
+{
+	BrowserThreadManager::Instance()->CreateBrowserThread(hParentWnd, strUrl, dwMark);
 }

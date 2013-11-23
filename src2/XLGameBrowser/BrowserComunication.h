@@ -14,7 +14,8 @@
 
 struct IEventHandler
 {
-	virtual void OnNavigate(LPCTSTR strUrl) = 0;
+	virtual void OnNavigate(DWORD dwToThreadID, LPCTSTR strUrl) = 0;
+	virtual void OnCreateAndNavigate(HWND hParentWnd, LPCTSTR strUrl, DWORD dwMark) = 0;
 };
 
 class BrowserComunication
@@ -31,11 +32,12 @@ public:
 
 	void AddEventHandler(IEventHandler* lpHandler);
 	void RemoveEventHandler(IEventHandler* lpHandler);
-	void Fire_OnNavigate(LPCTSTR strUrl);
+	void Fire_OnNavigate(DWORD dwToThreadID, LPCTSTR strUrl);
+	void Fire_OnCreateAndNavigate(HWND hParentWnd, LPCTSTR strUrl, DWORD dwMark);
 
 	long ConnectHostComunity();
 	long NotifyHostProcessCreated();
-	long NotifyHostBrowserCreated();
+	long NotifyHostBrowserCreated(DWORD dwMark);
 
 protected:
 	BrowserComunication(void);
@@ -49,6 +51,7 @@ protected:
 	virtual void OnRecvRespPackage(BasePackage* lpPackage);
 
 	void OnNavigate(BasePackage* lpPackage);
+	void OnCreateAndNavigate(BasePackage* lpPackage);
 
 private:
 	MsgManager*		m_lpMsgManager;

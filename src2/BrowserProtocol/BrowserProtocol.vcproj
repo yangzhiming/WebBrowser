@@ -169,6 +169,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CreateAndNavigatePackage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\NavigatePackage.cpp"
 				>
 			</File>
@@ -220,6 +224,10 @@
 			</File>
 			<File
 				RelativePath=".\ConnectPackage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CreateAndNavigatePackage.h"
 				>
 			</File>
 			<File

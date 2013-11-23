@@ -9,7 +9,7 @@ struct IEventHandler
 {
 	virtual void OnConnect() = 0;
 	virtual void OnProcessCreated(DWORD dwProcessID) = 0;
-	virtual void OnBrowserCreated(DWORD dwProcessID, DWORD dwThreadID) = 0;
+	virtual void OnBrowserCreated(DWORD dwProcessID, DWORD dwThreadID, DWORD dwMark) = 0;
 };
 
 class HostComunication
@@ -24,13 +24,15 @@ public:
 	virtual bool Init();
 	virtual bool Uninit();
 
-	long NotifyBrowserNavigate(DWORD dwProcessID, HWND hParentWnd, LPCTSTR url);
+	long NotifyBrowserNavigate(DWORD dwProcessID, DWORD dwThreadID, LPCTSTR url);
+	long NotifyBrowserCreateAndNavigate(DWORD dwProcessID, HWND hParentWnd, DWORD dwMark, LPCTSTR url);
+	long NotifyBrowserDestroy(DWORD dwProcessID, DWORD dwThreadID);
 
 	void AddEventHandler(IEventHandler* lpHandler);
 	void RemoveEventHandler(IEventHandler* lpHandler);
 	void Fire_ProcessCreated(DWORD dwProcessID);
 	void Fire_Connected();
-	void Fire_BrowserCreated(DWORD dwProcessID, DWORD dwThreadID);
+	void Fire_BrowserCreated(DWORD dwProcessID, DWORD dwThreadID, DWORD dwMark);
 
 protected:
 	HostComunication(void);

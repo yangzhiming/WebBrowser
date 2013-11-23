@@ -26,6 +26,7 @@ public:
 	END_UPDATE_UI_MAP()
 
 	BEGIN_MSG_MAP(CMainDlg)
+		MESSAGE_HANDLER(WM_TIMER, OnTimer)
 		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
 		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
 		COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
@@ -69,10 +70,11 @@ COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 			ATLASSERT(FALSE);
 		}
 
-		IXLMSWebBrowser* pMSWebBrowser = NULL;
-		pObject->CreateBrowser(0, (LONG)m_hWnd, &pMSWebBrowser);
+		pObject->CreateBrowser(0, (LONG)m_hWnd, &m_pMSWebBrowser);
 		CComBSTR strUrl(L"www.baidu.com");
-		pMSWebBrowser->Navigate(strUrl);
+		m_pMSWebBrowser->Navigate(strUrl);
+
+		SetTimer(23232, 5000, NULL);
 
 		return TRUE;
 	}
@@ -123,4 +125,15 @@ COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 		dlg.DoModal();
 		return 0L;
 	}
+
+	LRESULT OnTimer(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+	{
+		CComBSTR strUrl(L"www.163.com");
+		m_pMSWebBrowser->Navigate(strUrl);
+
+		return 0L;
+	}
+
+private:
+	IXLMSWebBrowser* m_pMSWebBrowser;
 };

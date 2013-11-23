@@ -41,11 +41,14 @@ END_COM_MAP()
 public:
 
 	STDMETHOD(CreateBrowser)(LONG dwProcessID, LONG hParentWnd, IXLMSWebBrowser** ppMSWebBrowser);
+	STDMETHOD(DestroyBrowser)(IXLMSWebBrowser* pMSWebBrowser);
+	//这个方法估计没法用。。。外部不关心processid和threadid
+	STDMETHOD(DestroyBrowser2)(LONG dwProcessID, LONG dwThreadID);
 
 protected:
 	virtual void OnConnect();
 	virtual void OnProcessCreated(DWORD dwProcessID);
-	virtual void OnBrowserCreated(DWORD dwProcessID, DWORD dwThreadID);
+	virtual void OnBrowserCreated(DWORD dwProcessID, DWORD dwThreadID, DWORD dwMark);
 
 private:
 	std::list<CXLMSWebBrowser*> m_BrowserList;

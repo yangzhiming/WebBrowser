@@ -106,12 +106,12 @@ void HostComunication::Fire_Connected()
 	}
 }
 
-void HostComunication::Fire_BrowserCreated(DWORD dwProcessID, DWORD dwThreadID)
+void HostComunication::Fire_BrowserCreated(DWORD dwProcessID, DWORD dwThreadID, DWORD dwMark)
 {
 	std::list<IEventHandler*>::iterator it = m_HandlerList.begin();
 	for(; it != m_HandlerList.end(); ++it)
 	{
-		(*it)->OnBrowserCreated(dwProcessID, dwThreadID);
+		(*it)->OnBrowserCreated(dwProcessID, dwThreadID, dwMark);
 	}
 }
 
@@ -150,14 +150,31 @@ void HostComunication::InternalSendPackageToProcess(DWORD dwProcessID, BasePacka
 	}
 }
 
-long HostComunication::NotifyBrowserNavigate(DWORD dwProcessID, HWND hParentWnd, LPCTSTR url)
+long HostComunication::NotifyBrowserNavigate(DWORD dwProcessID, DWORD dwThreadID, LPCTSTR url)
 {
 	std::string strUrl = CStringA(url);
 	NavigatePackage* lpPackage = new NavigatePackage();
-	lpPackage->m_hParentWnd = hParentWnd;
+	lpPackage->m_dwThreadID = dwThreadID;
 	lpPackage->m_strUrl = strUrl;
 	InternalSendPackageToProcess(dwProcessID, lpPackage);
 	delete lpPackage;
+	return 0;
+}
+
+long HostComunication::NotifyBrowserCreateAndNavigate(DWORD dwProcessID, HWND hParentWnd, DWORD dwMark, LPCTSTR url)
+{
+	std::string strUrl = CStringA(url);
+	CreateAndNavigatePackage* lpPackage = new CreateAndNavigatePackage();
+	lpPackage->m_hParentWnd = hParentWnd;
+	lpPackage->m_dwMark = dwMark;
+	lpPackage->m_strUrl = strUrl;
+	InternalSendPackageToProcess(dwProcessID, lpPackage);
+	delete lpPackage;
+	return 0;
+}
+
+long HostComunication::NotifyBrowserDestroy(DWORD dwProcessID, DWORD dwThreadID)
+{
 	return 0;
 }
 
@@ -202,7 +219,8 @@ void HostComunication::OnBrowserCreate(BasePackage* lpPackage)
 
 	DWORD dwProcessID = lpBrowserCreatedPackage->GetProcessID();
 	DWORD dwThreadID = lpBrowserCreatedPackage->m_dwBrowserThreadID;
-	Fire_BrowserCreated(dwProcessID, dwThreadID);
+	DWORD dwMark = lpBrowserCreatedPackage->m_dwMark;
+	Fire_BrowserCreated(dwProcessID, dwThreadID, dwMark);
 }
 
 void HostComunication::OnProcessCreated(BasePackage* lpPackage)

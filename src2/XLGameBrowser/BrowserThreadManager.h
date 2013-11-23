@@ -17,8 +17,9 @@ public:
 		return &instance;
 	}
 
-	DWORD CreateBrowserThread(LPCTSTR strUrl);
+	DWORD CreateBrowserThread(HWND hParent, LPCTSTR strUrl, DWORD dwMark);
 	void DestroyBrowserThread(DWORD dwThreadID);
+	BrowserThreadItem* FindBrowserItem(DWORD dwThreadID);
 
 protected:
 	BrowserThreadManager(void);

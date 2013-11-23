@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Fri Nov 22 16:18:23 2013
+/* at Sun Nov 24 02:26:13 2013
  */
 /* Compiler settings for ..\XLWebBrowser\XLWebBrowser.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -50,7 +50,7 @@
 #include "TestXLWebBrowser.h"
 
 #define TYPE_FORMAT_STRING_SIZE   61                                
-#define PROC_FORMAT_STRING_SIZE   85                                
+#define PROC_FORMAT_STRING_SIZE   193                               
 #define EXPR_FORMAT_STRING_SIZE   1                                 
 #define TRANSMIT_AS_TABLE_SIZE    0            
 #define WIRE_MARSHAL_TABLE_SIZE   1            
@@ -146,48 +146,140 @@ static const XLWebBrowser_MIDL_PROC_FORMAT_STRING XLWebBrowser__MIDL_ProcFormatS
 /* 34 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
-	/* Procedure CreateBrowser */
+	/* Procedure Destroy */
 
 /* 36 */	0x33,		/* FC_AUTO_HANDLE */
 			0x6c,		/* Old Flags:  object, Oi2 */
 /* 38 */	NdrFcLong( 0x0 ),	/* 0 */
-/* 42 */	NdrFcShort( 0x7 ),	/* 7 */
-/* 44 */	NdrFcShort( 0x14 ),	/* x86 Stack size/offset = 20 */
-/* 46 */	NdrFcShort( 0x10 ),	/* 16 */
+/* 42 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 44 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 46 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 48 */	NdrFcShort( 0x8 ),	/* 8 */
-/* 50 */	0x46,		/* Oi2 Flags:  clt must size, has return, has ext, */
-			0x4,		/* 4 */
+/* 50 */	0x44,		/* Oi2 Flags:  has return, has ext, */
+			0x1,		/* 1 */
 /* 52 */	0x8,		/* 8 */
 			0x1,		/* Ext Flags:  new corr desc, */
 /* 54 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 56 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 58 */	NdrFcShort( 0x0 ),	/* 0 */
 
-	/* Parameter dwProcessID */
+	/* Return value */
 
-/* 60 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 60 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
 /* 62 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
 /* 64 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
+	/* Procedure CreateBrowser */
+
+/* 66 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 68 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 72 */	NdrFcShort( 0x7 ),	/* 7 */
+/* 74 */	NdrFcShort( 0x14 ),	/* x86 Stack size/offset = 20 */
+/* 76 */	NdrFcShort( 0x10 ),	/* 16 */
+/* 78 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 80 */	0x46,		/* Oi2 Flags:  clt must size, has return, has ext, */
+			0x4,		/* 4 */
+/* 82 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 84 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 86 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 88 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Parameter dwProcessID */
+
+/* 90 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 92 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 94 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
 	/* Parameter hParentWnd */
 
-/* 66 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
-/* 68 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
-/* 70 */	0x8,		/* FC_LONG */
+/* 96 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 98 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 100 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
 	/* Parameter ppMSWebBrowser */
 
-/* 72 */	NdrFcShort( 0x200b ),	/* Flags:  must size, must free, in, srv alloc size=8 */
-/* 74 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
-/* 76 */	NdrFcShort( 0x26 ),	/* Type Offset=38 */
+/* 102 */	NdrFcShort( 0x200b ),	/* Flags:  must size, must free, in, srv alloc size=8 */
+/* 104 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
+/* 106 */	NdrFcShort( 0x26 ),	/* Type Offset=38 */
 
 	/* Return value */
 
-/* 78 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
-/* 80 */	NdrFcShort( 0x10 ),	/* x86 Stack size/offset = 16 */
-/* 82 */	0x8,		/* FC_LONG */
+/* 108 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 110 */	NdrFcShort( 0x10 ),	/* x86 Stack size/offset = 16 */
+/* 112 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Procedure DestroyBrowser2 */
+
+/* 114 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 116 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 120 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 122 */	NdrFcShort( 0x10 ),	/* x86 Stack size/offset = 16 */
+/* 124 */	NdrFcShort( 0x10 ),	/* 16 */
+/* 126 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 128 */	0x44,		/* Oi2 Flags:  has return, has ext, */
+			0x3,		/* 3 */
+/* 130 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 132 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 134 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 136 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Parameter dwProcessID */
+
+/* 138 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 140 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 142 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Parameter dwThreadID */
+
+/* 144 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
+/* 146 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 148 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Return value */
+
+/* 150 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 152 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
+/* 154 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Procedure DestroyBrowser */
+
+/* 156 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 158 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 162 */	NdrFcShort( 0x9 ),	/* 9 */
+/* 164 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
+/* 166 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 168 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 170 */	0x46,		/* Oi2 Flags:  clt must size, has return, has ext, */
+			0x2,		/* 2 */
+/* 172 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 174 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 176 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 178 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Parameter pMSWebBrowser */
+
+/* 180 */	NdrFcShort( 0xb ),	/* Flags:  must size, must free, in, */
+/* 182 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 184 */	NdrFcShort( 0x2a ),	/* Type Offset=42 */
+
+	/* Return value */
+
+/* 186 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 188 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 190 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
 			0x0
@@ -281,7 +373,8 @@ static const unsigned short IXLMSWebBrowser_FormatStringOffsetTable[] =
     (unsigned short) -1,
     (unsigned short) -1,
     (unsigned short) -1,
-    0
+    0,
+    36
     };
 
 static const MIDL_STUBLESS_PROXY_INFO IXLMSWebBrowser_ProxyInfo =
@@ -305,7 +398,7 @@ static const MIDL_SERVER_INFO IXLMSWebBrowser_ServerInfo =
     0,
     0,
     0};
-CINTERFACE_PROXY_VTABLE(8) _IXLMSWebBrowserProxyVtbl = 
+CINTERFACE_PROXY_VTABLE(9) _IXLMSWebBrowserProxyVtbl = 
 {
     &IXLMSWebBrowser_ProxyInfo,
     &IID_IXLMSWebBrowser,
@@ -316,7 +409,8 @@ CINTERFACE_PROXY_VTABLE(8) _IXLMSWebBrowserProxyVtbl =
     0 /* (void *) (INT_PTR) -1 /* IDispatch::GetTypeInfo */ ,
     0 /* (void *) (INT_PTR) -1 /* IDispatch::GetIDsOfNames */ ,
     0 /* IDispatch_Invoke_Proxy */ ,
-    (void *) (INT_PTR) -1 /* IXLMSWebBrowser::Navigate */
+    (void *) (INT_PTR) -1 /* IXLMSWebBrowser::Navigate */ ,
+    (void *) (INT_PTR) -1 /* IXLMSWebBrowser::Destroy */
 };
 
 
@@ -326,6 +420,7 @@ static const PRPC_STUB_FUNCTION IXLMSWebBrowser_table[] =
     STUB_FORWARDING_FUNCTION,
     STUB_FORWARDING_FUNCTION,
     STUB_FORWARDING_FUNCTION,
+    NdrStubCall2,
     NdrStubCall2
 };
 
@@ -333,7 +428,7 @@ CInterfaceStubVtbl _IXLMSWebBrowserStubVtbl =
 {
     &IID_IXLMSWebBrowser,
     &IXLMSWebBrowser_ServerInfo,
-    8,
+    9,
     &IXLMSWebBrowser_table[-3],
     CStdStubBuffer_DELEGATING_METHODS
 };
@@ -349,7 +444,9 @@ static const unsigned short IXLWebBrowserManager_FormatStringOffsetTable[] =
     (unsigned short) -1,
     (unsigned short) -1,
     (unsigned short) -1,
-    36
+    66,
+    114,
+    156
     };
 
 static const MIDL_STUBLESS_PROXY_INFO IXLWebBrowserManager_ProxyInfo =
@@ -373,7 +470,7 @@ static const MIDL_SERVER_INFO IXLWebBrowserManager_ServerInfo =
     0,
     0,
     0};
-CINTERFACE_PROXY_VTABLE(8) _IXLWebBrowserManagerProxyVtbl = 
+CINTERFACE_PROXY_VTABLE(10) _IXLWebBrowserManagerProxyVtbl = 
 {
     &IXLWebBrowserManager_ProxyInfo,
     &IID_IXLWebBrowserManager,
@@ -384,7 +481,9 @@ CINTERFACE_PROXY_VTABLE(8) _IXLWebBrowserManagerProxyVtbl =
     0 /* (void *) (INT_PTR) -1 /* IDispatch::GetTypeInfo */ ,
     0 /* (void *) (INT_PTR) -1 /* IDispatch::GetIDsOfNames */ ,
     0 /* IDispatch_Invoke_Proxy */ ,
-    (void *) (INT_PTR) -1 /* IXLWebBrowserManager::CreateBrowser */
+    (void *) (INT_PTR) -1 /* IXLWebBrowserManager::CreateBrowser */ ,
+    (void *) (INT_PTR) -1 /* IXLWebBrowserManager::DestroyBrowser2 */ ,
+    (void *) (INT_PTR) -1 /* IXLWebBrowserManager::DestroyBrowser */
 };
 
 
@@ -394,6 +493,8 @@ static const PRPC_STUB_FUNCTION IXLWebBrowserManager_table[] =
     STUB_FORWARDING_FUNCTION,
     STUB_FORWARDING_FUNCTION,
     STUB_FORWARDING_FUNCTION,
+    NdrStubCall2,
+    NdrStubCall2,
     NdrStubCall2
 };
 
@@ -401,7 +502,7 @@ CInterfaceStubVtbl _IXLWebBrowserManagerStubVtbl =
 {
     &IID_IXLWebBrowserManager,
     &IXLWebBrowserManager_ServerInfo,
-    8,
+    10,
     &IXLWebBrowserManager_table[-3],
     CStdStubBuffer_DELEGATING_METHODS
 };

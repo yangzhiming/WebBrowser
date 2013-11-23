@@ -17,4 +17,5 @@ public:
 
 public:
 	DWORD m_dwBrowserThreadID;
+	DWORD m_dwMark;
 };

@@ -4,6 +4,7 @@
 #include "XLMSWebBrowser.h"
 #include "HostComunication.h"
 
+unsigned long CXLMSWebBrowser::m_nextTaskCookie = 1;
 // CXLMSWebBrowser
 CXLMSWebBrowser::CXLMSWebBrowser()
 {
@@ -22,6 +23,16 @@ HRESULT CXLMSWebBrowser::FinalConstruct()
 void CXLMSWebBrowser::FinalRelease()
 {
 
+}
+
+long CXLMSWebBrowser::GetNextMarkCookie()
+{
+	if (m_nextTaskCookie == (std::numeric_limits<unsigned long>::max)())
+	{
+		m_nextTaskCookie = 1;
+	}
+
+	return m_nextTaskCookie++;
 }
 
 BOOL CXLMSWebBrowser::Create(LONG dwProcessID, HWND hParentWnd)
@@ -92,6 +103,14 @@ BOOL CXLMSWebBrowser::CreateBrowserInProcess(LONG dwProcessID, HWND hParentWnd)
 	return FALSE;
 }
 
+STDMETHODIMP CXLMSWebBrowser::Destroy(void)
+{
+	// TODO: 在此添加实现代码
+	HostComunication::Instance()->NotifyBrowserDestroy(m_dwProcessID, m_dwThreadID);
+
+	return S_OK;
+}
+
 STDMETHODIMP CXLMSWebBrowser::Navigate(BSTR url)
 {
 	// TODO: Add your implementation code here
@@ -104,10 +123,14 @@ STDMETHODIMP CXLMSWebBrowser::Navigate(BSTR url)
 		}
 		break;
 	case ProcessCreated:
+		{
+			//此处可能threadid尚未返回，需继续写代码保证
+		}
+		break;
 	case BrowserCreated:
 		{
 			CString strUrl(url);
-			HostComunication::Instance()->NotifyBrowserNavigate(0, m_hParentWnd, strUrl);
+			HostComunication::Instance()->NotifyBrowserNavigate(m_dwProcessID, m_dwThreadID, strUrl);
 		}
 		break;
 	default:
@@ -128,17 +151,24 @@ DWORD CXLMSWebBrowser::GetBrowserThreadID() const
 	return m_dwThreadID;
 }
 
+DWORD CXLMSWebBrowser::GetMarkCookie() const
+{
+	return m_dwMark;
+}
+
 void CXLMSWebBrowser::OnProcessCreated()
 {
 	m_dwState = ProcessCreated;
 
 	if(m_bDelayNavigate)
 	{
-		HostComunication::Instance()->NotifyBrowserNavigate(m_dwProcessID, m_hParentWnd, m_strToNavigate);
+		m_dwMark = GetNextMarkCookie();
+		HostComunication::Instance()->NotifyBrowserCreateAndNavigate(m_dwProcessID, m_hParentWnd, m_dwMark, m_strToNavigate);
 	}
 }
 
-void CXLMSWebBrowser::OnBrowserCreated()
+void CXLMSWebBrowser::OnBrowserCreated(DWORD dwThreadID)
 {
+	m_dwThreadID = dwThreadID;
 	m_dwState = BrowserCreated;
 }

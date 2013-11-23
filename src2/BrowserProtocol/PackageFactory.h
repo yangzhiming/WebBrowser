@@ -5,6 +5,7 @@
 #include "./BrowserCreatedPackage.h"
 #include "./NavigatePackage.h"
 #include "./CommonPackageT.h"
+#include "./CreateAndNavigatePackage.h"
 
 class PackageFactory
 {
@@ -30,6 +31,9 @@ public:
 				break;
 			case XBM_MSG_PROCESSCREATED:
 				return new ProcessCreatedPackage();
+				break;
+			case XBM_MSG_CREATEANDNAVIGATE:
+				return new CreateAndNavigatePackage();
 				break;
 			default:
 				assert(false);

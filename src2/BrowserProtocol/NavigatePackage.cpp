@@ -15,7 +15,7 @@ size_t NavigatePackage::EncodeLogicBody(BYTE* pResult,size_t len)
 {
 	int nowpos = 0;
 	nowpos += ByteStream::WriteString(pResult+nowpos, m_strUrl);
-	nowpos += ByteStream::WriteDword(pResult+nowpos, (DWORD)m_hParentWnd);
+	nowpos += ByteStream::WriteDword(pResult+nowpos, m_dwThreadID);
 	return nowpos;
 }
 
@@ -31,7 +31,7 @@ size_t NavigatePackage::DecodeLogicBody(const BYTE* pBuffer,size_t len)
 	}
 	nowpos += readlen;
 
-	readlen = ByteStream::ReadDword(pBuffer+nowpos, (DWORD&)m_hParentWnd,sizeof(DWORD));
+	readlen = ByteStream::ReadDword(pBuffer+nowpos, (DWORD&)m_dwThreadID,sizeof(DWORD));
 	if(readlen <= 0)
 	{
 		return -1;
@@ -43,5 +43,5 @@ size_t NavigatePackage::DecodeLogicBody(const BYTE* pBuffer,size_t len)
 
 size_t NavigatePackage::GetLogicBodyLen()
 {
-	return ByteStream::SizeOfString(m_strUrl) + sizeof(HWND);
+	return ByteStream::SizeOfString(m_strUrl) + sizeof(m_dwThreadID);
 }
