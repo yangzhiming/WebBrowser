@@ -16,6 +16,7 @@ public:
 
 	BEGIN_MSG_MAP(CAboutDlg)
 		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
+		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
 		COMMAND_ID_HANDLER(IDOK, OnCloseCmd)
 		COMMAND_ID_HANDLER(IDCANCEL, OnCloseCmd)
 	END_MSG_MAP()
@@ -29,10 +30,9 @@ public:
 	{
 		CenterWindow(GetParent());
  
- 		IXLMSWebBrowser* pMSWebBrowser = NULL;
- 		pObject->CreateBrowser(0, (LONG)m_hWnd, &pMSWebBrowser);
+ 		pObject->CreateBrowser(0, (LONG)m_hWnd, &m_pMSWebBrowser);
  		CComBSTR strUrl(L"www.qq.com");
- 		pMSWebBrowser->Navigate(strUrl);
+ 		m_pMSWebBrowser->Navigate(strUrl);
 
 		return TRUE;
 	}
@@ -42,4 +42,13 @@ public:
 		EndDialog(wID);
 		return 0;
 	}
+
+	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+	{
+		pObject->DestroyBrowser(m_pMSWebBrowser);
+		return 0L;
+	}
+
+private:
+	IXLMSWebBrowser* m_pMSWebBrowser;
 };

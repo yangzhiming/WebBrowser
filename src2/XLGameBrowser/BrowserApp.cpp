@@ -47,3 +47,12 @@ void BrowserEventHandler::OnCreateAndNavigate(HWND hParentWnd, LPCTSTR strUrl, D
 {
 	BrowserThreadManager::Instance()->CreateBrowserThread(hParentWnd, strUrl, dwMark);
 }
+
+void BrowserEventHandler::OnDestroy(DWORD dwToThreadID)
+{
+	BrowserThreadItem* lpItem = BrowserThreadManager::Instance()->FindBrowserItem(dwToThreadID);
+	if(lpItem)
+	{
+		lpItem->Destroy();
+	}
+}

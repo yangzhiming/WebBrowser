@@ -264,6 +264,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SafeWindow.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>

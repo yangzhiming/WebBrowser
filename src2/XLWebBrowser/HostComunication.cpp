@@ -3,6 +3,7 @@
 #include "../BrowserProtocol/ConnectPackage.h"
 #include "../BrowserProtocol/CommonPackageT.h"
 #include "../BrowserProtocol/NavigatePackage.h"
+#include "../BrowserProtocol/ThreadPackageT.h"
 
 HostComunication::HostComunication(void)
 {
@@ -175,6 +176,10 @@ long HostComunication::NotifyBrowserCreateAndNavigate(DWORD dwProcessID, HWND hP
 
 long HostComunication::NotifyBrowserDestroy(DWORD dwProcessID, DWORD dwThreadID)
 {
+	DestroyPackage * lpPackage = new DestroyPackage();
+	lpPackage->m_dwThreadID = dwThreadID;
+	InternalSendPackageToProcess(dwProcessID, lpPackage);
+	delete lpPackage;
 	return 0;
 }
 

@@ -4,6 +4,7 @@
 #include "../BrowserProtocol/BrowserCreatedPackage.h"
 #include "../BrowserProtocol/CommonPackageT.h"
 #include "../BrowserProtocol/NavigatePackage.h"
+#include "../BrowserProtocol/ThreadPackageT.h"
 
 BrowserComunication::BrowserComunication(void)
 {
@@ -106,6 +107,15 @@ void BrowserComunication::Fire_OnCreateAndNavigate(HWND hParentWnd, LPCTSTR strU
 	}
 }
 
+void BrowserComunication::Fire_OnDestroy(DWORD dwThreadID)
+{
+	std::list<IEventHandler*>::iterator it = m_HandlerList.begin();
+	for(; it != m_HandlerList.end(); ++it)
+	{
+		(*it)->OnDestroy(dwThreadID);
+	}
+}
+
 //连接宿主通信端
 long BrowserComunication::ConnectHostComunity()
 {
@@ -185,6 +195,11 @@ void BrowserComunication::OnRecvRespPackage(BasePackage* lpPackage)
 			OnCreateAndNavigate(lpPackage);
 		}
 		break;
+	case XBM_MSG_DESTROY:
+		{
+			OnBrowserDestroy(lpPackage);
+		}
+		break;
 	default:
 		assert(false);
 		break;
@@ -209,4 +224,12 @@ void BrowserComunication::OnCreateAndNavigate(BasePackage* lpPackage)
 	assert(lpChildPackage);
 
 	Fire_OnCreateAndNavigate(lpChildPackage->m_hParentWnd, CString(lpChildPackage->m_strUrl.c_str()), lpChildPackage->m_dwMark);
+}
+
+void BrowserComunication::OnBrowserDestroy(BasePackage* lpPackage)
+{
+	DestroyPackage* lpDestroyPackage = dynamic_cast<DestroyPackage*>(lpPackage);
+	assert(lpDestroyPackage);
+
+	Fire_OnDestroy(lpDestroyPackage->m_dwThreadID);
 }

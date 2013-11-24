@@ -31,12 +31,11 @@ bool BrowserThreadItem::Destroy()
 {
 	if(m_hThread != NULL)
 	{
-		m_pBrowserWnd->DestroyWindow();
+		m_pBrowserWnd->SafeDelete();
+		m_pBrowserWnd = NULL;
+		WaitForSingleObject(m_hThread, INFINITE);
 		CloseHandle(m_hThread);
 		m_hThread = NULL;
-
-		delete m_pBrowserWnd;
-		m_pBrowserWnd = NULL;
 	}
 	return true;
 }
@@ -49,7 +48,7 @@ unsigned int WINAPI BrowserThreadItem::BrowserWorkerThread(LPVOID param)
 	AtlInitCommonControls(ICC_BAR_CLASSES);	// add flags to support other controls
 
 	BrowserThreadItem* lpBrowserThreadItem = (BrowserThreadItem*)param;
-	lpBrowserThreadItem->m_pBrowserWnd = new BrowserWnd();
+	lpBrowserThreadItem->m_pBrowserWnd = new SafeWindowWrapper<BrowserWnd>();
 	lpBrowserThreadItem->m_pBrowserWnd->SetMark(lpBrowserThreadItem->m_dwMark);
 	lpBrowserThreadItem->m_pBrowserWnd->CreateBrowserWnd(lpBrowserThreadItem->m_hParentWnd);
 	lpBrowserThreadItem->m_pBrowserWnd->ShowWindow(SW_SHOW);

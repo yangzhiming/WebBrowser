@@ -10,6 +10,8 @@ static const UINT XBM_MSG_NAVIGATE      =   XBM_MSG_BEGIN_ID + 4;
 static const UINT XBM_MSG_PROCESSCREATED =  XBM_MSG_BEGIN_ID + 5;
 static const UINT XBM_MSG_HOSTWNDSIZE    = XBM_MSG_BEGIN_ID + 6;
 
+static const UINT XBM_MSG_DESTROY       =  XBM_MSG_BEGIN_ID + 7;
+
 static const UINT XBM_MSG_END_ID        =   XBM_MSG_BEGIN_ID + 1000;
 
 #endif

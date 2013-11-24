@@ -74,7 +74,7 @@ COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 		CComBSTR strUrl(L"www.baidu.com");
 		m_pMSWebBrowser->Navigate(strUrl);
 
-		SetTimer(23232, 5000, NULL);
+		SetTimer(23232, 15000, NULL);
 
 		return TRUE;
 	}
@@ -82,6 +82,7 @@ COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 	{
 		// unregister message filtering and idle updates
+		
 		CMessageLoop* pLoop = _Module.GetMessageLoop();
 		ATLASSERT(pLoop != NULL);
 		pLoop->RemoveMessageFilter(this);
@@ -128,8 +129,11 @@ COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 
 	LRESULT OnTimer(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 	{
-		CComBSTR strUrl(L"www.163.com");
-		m_pMSWebBrowser->Navigate(strUrl);
+		if(m_pMSWebBrowser)
+		{
+			pObject->DestroyBrowser(m_pMSWebBrowser);
+			m_pMSWebBrowser = NULL;
+		}
 
 		return 0L;
 	}

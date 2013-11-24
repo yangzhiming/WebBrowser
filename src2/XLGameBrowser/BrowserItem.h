@@ -7,8 +7,8 @@
 //
 //
 //*********************************************************************************************//
-
-class BrowserWnd;
+#include "SafeWindow.h"
+#include "BrowserWnd.h"
 class BrowserThreadItem
 {
 public:
@@ -23,7 +23,7 @@ public:
 protected:
 	static unsigned int WINAPI BrowserWorkerThread(LPVOID param);
 private:
-	BrowserWnd*			m_pBrowserWnd;
+	SafeWindowWrapper<BrowserWnd>*		m_pBrowserWnd;
 	HANDLE				m_hThread;
 	CString				m_strToNavigate;
 	HWND                m_hParentWnd;

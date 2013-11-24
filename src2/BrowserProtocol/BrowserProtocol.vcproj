@@ -161,10 +161,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CommonPackageT.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\ConnectPackage.cpp"
 				>
 			</File>
@@ -252,6 +248,10 @@
 			</File>
 			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ThreadPackageT.h"
 				>
 			</File>
 		</Filter>

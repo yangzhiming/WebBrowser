@@ -7,6 +7,7 @@ class BrowserEventHandler : public IEventHandler
 public:
 	virtual void OnNavigate(DWORD dwToThreadID, LPCTSTR strUrl);
 	virtual void OnCreateAndNavigate(HWND hParentWnd, LPCTSTR strUrl, DWORD dwMark);
+	virtual void OnDestroy(DWORD dwToThreadID);
 };
 
 class BrowserApp

@@ -6,6 +6,7 @@
 #include "./NavigatePackage.h"
 #include "./CommonPackageT.h"
 #include "./CreateAndNavigatePackage.h"
+#include "./ThreadPackageT.h"
 
 class PackageFactory
 {
@@ -34,6 +35,9 @@ public:
 				break;
 			case XBM_MSG_CREATEANDNAVIGATE:
 				return new CreateAndNavigatePackage();
+				break;
+			case XBM_MSG_DESTROY:
+				return new DestroyPackage();
 				break;
 			default:
 				assert(false);
