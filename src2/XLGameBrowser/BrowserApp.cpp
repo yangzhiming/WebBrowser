@@ -50,9 +50,11 @@ void BrowserEventHandler::OnCreateAndNavigate(HWND hParentWnd, LPCTSTR strUrl, D
 
 void BrowserEventHandler::OnDestroy(DWORD dwToThreadID)
 {
-	BrowserThreadItem* lpItem = BrowserThreadManager::Instance()->FindBrowserItem(dwToThreadID);
-	if(lpItem)
+	BrowserThreadManager::Instance()->DestroyBrowserThread(dwToThreadID);
+
+	UINT nCount = BrowserThreadManager::Instance()->GetBrowserCount();
+	if(nCount == 0)
 	{
-		lpItem->Destroy();
+		::PostQuitMessage(0);
 	}
 }

@@ -44,4 +44,9 @@ BrowserThreadItem* BrowserThreadManager::FindBrowserItem(DWORD dwThreadID)
 	}
 
 	return NULL;
-}	
+}
+
+UINT BrowserThreadManager::GetBrowserCount()
+{
+	return m_BrowserThreadItems.size();
+}

@@ -45,7 +45,7 @@ public:
 
 	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 	{
-		pObject->DestroyBrowser(m_pMSWebBrowser);
+		//pObject->DestroyBrowser(m_pMSWebBrowser);
 		return 0L;
 	}
 

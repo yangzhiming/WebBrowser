@@ -2,6 +2,8 @@
 #include "BrowserWnd.h"
 #include "BrowserComunication.h"
 
+const UINT BrowserWnd::WM_BROWSER_QUIT = ::RegisterWindowMessage(L"WM_BROWSER_QUIT");
+
 BrowserWnd::BrowserWnd(void)
 {
 	m_dwMark = 0;
@@ -22,6 +24,11 @@ HWND BrowserWnd::CreateBrowserWnd(HWND hOwner)
 	ATLASSERT(::IsWindow(hOwner));
 	HWND hNewWnd = Create(hOwner, &rect, WebBrowser_CLSID, WS_CLIPSIBLINGS|WS_CHILD, WS_EX_TOOLWINDOW|WS_EX_NOACTIVATE);
 	return hNewWnd;
+}
+
+void BrowserWnd::DestroyBrowserWnd()
+{
+	PostMessage(WM_BROWSER_QUIT, 0, 0);
 }
 
 HRESULT BrowserWnd::Navigate(LPCTSTR pstrUrl,int nFlag ,LPCTSTR pTargetName,LPCTSTR pPostData,LPCTSTR pHeader)
@@ -70,17 +77,24 @@ HRESULT BrowserWnd::GetBrowser(IWebBrowser2** ppWebBrowser)
 
 	*ppWebBrowser = NULL;
 
-	CAxWindow wnd = m_hWnd;
+	//CAxWindow wnd = m_hWnd;
 	CComPtr<IWebBrowser2> spWebBrowser;
-	HRESULT hRet = wnd.QueryControl(IID_IWebBrowser2, (void**)&spWebBrowser);
+	HRESULT hRet = this->QueryControl(IID_IWebBrowser2, (void**)&spWebBrowser);
 	ATLASSERT(SUCCEEDED(hRet));
 
 	return spWebBrowser.CopyTo(ppWebBrowser);
 }
 
-void BrowserWnd::OnDestroy()
+LRESULT BrowserWnd::OnBrowserQuit(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
 	::PostQuitMessage(0);
+	SetMsgHandled(TRUE);
+	return 0L;
+}
+
+void BrowserWnd::OnDestroy()
+{
+	//::PostQuitMessage(0);
 }
 
 int BrowserWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)

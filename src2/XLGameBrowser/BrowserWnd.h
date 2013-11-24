@@ -23,21 +23,26 @@ public:
 		MSG_WM_CREATE(OnCreate)
 		MSG_WM_DESTROY(OnDestroy)
 		MSG_WM_TIMER(OnTimer)
+		MESSAGE_HANDLER(WM_BROWSER_QUIT, OnBrowserQuit)
 	END_MSG_MAP()
 
 	int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	void OnDestroy();
 	void OnTimer(UINT_PTR nIDEvent);
+	LRESULT OnBrowserQuit(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
 public:
 
 	void SetMark(DWORD dwMark);
 	HWND CreateBrowserWnd(HWND hOwner);
+	void DestroyBrowserWnd();
 	HRESULT Navigate(LPCTSTR pstrUrl,int nFlag = 0,LPCTSTR pTargetName = NULL,LPCTSTR pPostData = NULL,LPCTSTR pHeader = NULL);
 
 private:
 
 	HRESULT GetBrowser(IWebBrowser2** ppWebBrowser);
+
+	static const UINT WM_BROWSER_QUIT;
 
 private:
 	DWORD m_dwMark;

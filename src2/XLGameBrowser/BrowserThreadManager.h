@@ -20,6 +20,7 @@ public:
 	DWORD CreateBrowserThread(HWND hParent, LPCTSTR strUrl, DWORD dwMark);
 	void DestroyBrowserThread(DWORD dwThreadID);
 	BrowserThreadItem* FindBrowserItem(DWORD dwThreadID);
+	UINT GetBrowserCount();
 
 protected:
 	BrowserThreadManager(void);

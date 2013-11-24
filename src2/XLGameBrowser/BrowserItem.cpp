@@ -31,7 +31,8 @@ bool BrowserThreadItem::Destroy()
 {
 	if(m_hThread != NULL)
 	{
-		m_pBrowserWnd->SafeDelete();
+		//m_pBrowserWnd->SafeDelete();
+		m_pBrowserWnd->DestroyBrowserWnd();
 		m_pBrowserWnd = NULL;
 		WaitForSingleObject(m_hThread, INFINITE);
 		CloseHandle(m_hThread);
