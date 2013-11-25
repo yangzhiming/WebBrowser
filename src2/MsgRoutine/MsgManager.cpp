@@ -51,6 +51,8 @@ bool MsgManager::Uninit()
 		CloseHandle(m_hSendEvent);
 		CloseHandle(m_hEndEvent);
 	}
+
+	ClearSendList();
 	
 	return true;
 }

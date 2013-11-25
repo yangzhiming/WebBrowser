@@ -105,7 +105,7 @@ int BrowserWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	BrowserComunication::Instance()->NotifyHostBrowserCreated(m_dwMark);
 
-	SetTimer(12345, 50, NULL);
+	SetTimer(12345, 10, NULL);
 	return 0;
 }
 

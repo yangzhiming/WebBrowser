@@ -114,6 +114,14 @@ COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
 
 	void CloseDialog(int nVal)
 	{
+		if(m_pMSWebBrowser)
+		{
+			g_pObject->DestroyBrowser(m_pMSWebBrowser);
+			m_pMSWebBrowser = NULL;
+		}
+
+		g_pObject->Release();
+
 		DestroyWindow();
 		::PostQuitMessage(nVal);
 	}
