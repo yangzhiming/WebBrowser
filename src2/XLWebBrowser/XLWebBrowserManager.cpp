@@ -75,6 +75,8 @@ void CXLWebBrowserManager::OnProcessCreated(DWORD dwProcessID)
 	std::list<CXLMSWebBrowser*>::iterator it = m_BrowserList.begin();
 	for(; it != m_BrowserList.end(); ++it)
 	{
+		//理论上是会找到多个processid的，如果存在单进程多个浏览器的话。
+		//但是通常只有第一个创建进程的浏览器收到此事件，其他的直接在此进程创建的浏览器，不收到此事件...
 		if((*it)->GetBrowserProcessID() == dwProcessID)
 		{
 			(*it)->OnProcessCreated();

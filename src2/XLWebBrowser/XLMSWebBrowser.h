@@ -67,7 +67,8 @@ private:
 	DWORD m_dwProcessID;
 	DWORD m_dwThreadID;
 	BrowserState m_dwState;
-	BOOL m_bDelayNavigate;
+	BOOL m_bWaitForProcessCreate;
+	BOOL m_bWaitForBrowserCreate;
 	CString m_strToNavigate;
 	DWORD m_dwMark;
 	static unsigned long	m_nextTaskCookie;

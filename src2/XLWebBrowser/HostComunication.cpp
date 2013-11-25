@@ -89,6 +89,18 @@ void HostComunication::RemoveEventHandler(IEventHandler* lpHandler)
 	}
 }
 
+bool HostComunication::HasConnection(DWORD dwProcessID)
+{
+	std::map<DWORD, HWND>::iterator it = m_BrowserConnHwnds.begin();
+	for(; it != m_BrowserConnHwnds.end(); ++it)
+	{
+		if(it->first == dwProcessID)
+			return true;
+	}
+
+	return false;
+}
+
 void HostComunication::Fire_ProcessCreated(DWORD dwProcessID)
 {
 	std::list<IEventHandler*>::iterator it = m_HandlerList.begin();

@@ -12,7 +12,8 @@ CXLMSWebBrowser::CXLMSWebBrowser()
 	m_dwThreadID = 0;
 	m_dwProcessID = 0;
 	m_dwState = UnCreated;
-	m_bDelayNavigate = FALSE;
+	m_bWaitForProcessCreate = FALSE;
+	m_bWaitForBrowserCreate = FALSE;
 }
 
 HRESULT CXLMSWebBrowser::FinalConstruct()
@@ -37,7 +38,8 @@ long CXLMSWebBrowser::GetNextMarkCookie()
 
 BOOL CXLMSWebBrowser::Create(LONG dwProcessID, HWND hParentWnd)
 {
-	if(dwProcessID == 0)
+	BOOL bHasConnection = HostComunication::Instance()->HasConnection(dwProcessID);
+	if(!bHasConnection)
 	{
 		CreateNewBrowserProcess(hParentWnd);
 	}
@@ -100,7 +102,13 @@ BOOL CXLMSWebBrowser::CreateNewBrowserProcess(HWND hParentWnd)
 
 BOOL CXLMSWebBrowser::CreateBrowserInProcess(LONG dwProcessID, HWND hParentWnd)
 {
-	return FALSE;
+	m_dwState = ProcessCreated;
+	m_dwProcessID = dwProcessID;
+	m_hParentWnd = hParentWnd;
+	m_dwMark = GetNextMarkCookie();
+	HostComunication::Instance()->NotifyBrowserCreateAndNavigate(m_dwProcessID, m_hParentWnd, m_dwMark, m_strToNavigate);
+
+	return TRUE;
 }
 
 STDMETHODIMP CXLMSWebBrowser::Destroy(void)
@@ -119,12 +127,13 @@ STDMETHODIMP CXLMSWebBrowser::Navigate(BSTR url)
 	{
 	case UnCreated:
 		{
-			m_bDelayNavigate = TRUE;
+			m_bWaitForProcessCreate = TRUE;
 		}
 		break;
 	case ProcessCreated:
 		{
 			//此处可能threadid尚未返回，需继续写代码保证
+			m_bWaitForBrowserCreate = TRUE;
 		}
 		break;
 	case BrowserCreated:
@@ -160,10 +169,11 @@ void CXLMSWebBrowser::OnProcessCreated()
 {
 	m_dwState = ProcessCreated;
 
-	if(m_bDelayNavigate)
+	if(m_bWaitForProcessCreate)
 	{
 		m_dwMark = GetNextMarkCookie();
 		HostComunication::Instance()->NotifyBrowserCreateAndNavigate(m_dwProcessID, m_hParentWnd, m_dwMark, m_strToNavigate);
+		m_bWaitForProcessCreate = FALSE;
 	}
 }
 
@@ -171,4 +181,10 @@ void CXLMSWebBrowser::OnBrowserCreated(DWORD dwThreadID)
 {
 	m_dwThreadID = dwThreadID;
 	m_dwState = BrowserCreated;
+
+	if(m_bWaitForBrowserCreate)
+	{
+		HostComunication::Instance()->NotifyBrowserNavigate(m_dwProcessID, m_dwThreadID, m_strToNavigate);
+		m_bWaitForBrowserCreate = FALSE;
+	}
 }

@@ -34,6 +34,8 @@ public:
 	void Fire_Connected();
 	void Fire_BrowserCreated(DWORD dwProcessID, DWORD dwThreadID, DWORD dwMark);
 
+	bool HasConnection(DWORD dwProcessID);
+
 protected:
 	HostComunication(void);
 	~HostComunication(void);
