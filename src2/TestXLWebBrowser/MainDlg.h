@@ -66,17 +66,17 @@ COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
 
 		HRESULT hr;
 
-		hr = CoCreateInstance(CLSID_XLWebBrowserManager, NULL, CLSCTX_INPROC_SERVER, IID_IXLWebBrowserManager, (LPVOID*)&pObject);
-		if(FAILED(hr))
-		{
-			ATLASSERT(FALSE);
-		}
+ 		hr = CoCreateInstance(CLSID_XLWebBrowserManager, NULL, CLSCTX_INPROC_SERVER, IID_IXLWebBrowserManager, (LPVOID*)&g_pObject);
+ 		if(FAILED(hr))
+ 		{
+ 			ATLASSERT(FALSE);
+ 		}
+ 
+ 		g_pObject->CreateBrowser(0, (LONG)m_hWnd, &m_pMSWebBrowser);
+ 		CComBSTR strUrl(L"www.baidu.com");
+ 		m_pMSWebBrowser->Navigate(strUrl);
 
-		pObject->CreateBrowser(0, (LONG)m_hWnd, &m_pMSWebBrowser);
-		CComBSTR strUrl(L"www.baidu.com");
-		m_pMSWebBrowser->Navigate(strUrl);
-
-		SetTimer(23232, 15000, NULL);
+//		SetTimer(23232, 15000, NULL);
 
 		return TRUE;
 	}
@@ -130,22 +130,24 @@ COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
 
 	LRESULT OnTimer(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 	{
-		if(m_pMSWebBrowser)
-		{
-			pObject->DestroyBrowser(m_pMSWebBrowser);
-			m_pMSWebBrowser = NULL;
-		}
+// 		if(m_pMSWebBrowser)
+// 		{
+// 			g_pObject->DestroyBrowser(m_pMSWebBrowser);
+// 			m_pMSWebBrowser = NULL;
+// 		}
 
 		return 0L;
 	}
 
 	LRESULT OnBnClickedButton2(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	{
-		if(m_pMSWebBrowser)
-		{
-			pObject->DestroyBrowser(m_pMSWebBrowser);
-			m_pMSWebBrowser = NULL;
-		}
+ 		if(m_pMSWebBrowser)
+ 		{
+ 			g_pObject->DestroyBrowser(m_pMSWebBrowser);
+ 			m_pMSWebBrowser = NULL;
+ 		}
+
+		g_pObject->Release();
 
 		DestroyWindow();
 		::PostQuitMessage(0);
@@ -154,11 +156,11 @@ COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
 
 	LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 	{
-		if(m_pMSWebBrowser)
-		{
-			pObject->DestroyBrowser(m_pMSWebBrowser);
-			m_pMSWebBrowser = NULL;
-		}
+//  		if(m_pMSWebBrowser)
+//  		{
+//  			g_pObject->DestroyBrowser(m_pMSWebBrowser);
+//  			m_pMSWebBrowser = NULL;
+//  		}
 
 		bHandled = FALSE;
 

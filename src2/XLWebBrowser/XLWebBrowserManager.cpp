@@ -52,15 +52,15 @@ STDMETHODIMP CXLWebBrowserManager::DestroyBrowser(IXLMSWebBrowser* pMSWebBrowser
 STDMETHODIMP CXLWebBrowserManager::DestroyBrowser2(LONG dwProcessID, LONG dwThreadID)
 {
 	// TODO: 在此添加实现代码
-	std::list<CXLMSWebBrowser*>::iterator it = m_BrowserList.begin();
-	for(; it != m_BrowserList.end(); ++it)
-	{
-		if((*it)->GetBrowserProcessID() == dwProcessID && (*it)->GetBrowserThreadID() == dwThreadID)
-		{
-			(*it)->Destroy();
-			break;
-		}
-	}
+ 	std::list<CXLMSWebBrowser*>::iterator it = m_BrowserList.begin();
+ 	for(; it != m_BrowserList.end(); ++it)
+ 	{
+ 		if((*it)->GetBrowserProcessID() == dwProcessID && (*it)->GetBrowserThreadID() == dwThreadID)
+ 		{
+ 			(*it)->Destroy();
+ 			break;
+ 		}
+ 	}
 
 	return S_OK;
 }

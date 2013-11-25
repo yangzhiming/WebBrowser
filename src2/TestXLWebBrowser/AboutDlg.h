@@ -8,7 +8,7 @@
 #include <atlstr.h>
 #include "resource.h"
 
-IXLWebBrowserManager * pObject = NULL;
+IXLWebBrowserManager * g_pObject = NULL;
 class CAboutDlg : public CDialogImpl<CAboutDlg>
 {
 public:
@@ -30,7 +30,7 @@ public:
 	{
 		CenterWindow(GetParent());
  
- 		pObject->CreateBrowser(0, (LONG)m_hWnd, &m_pMSWebBrowser);
+ 		g_pObject->CreateBrowser(0, (LONG)m_hWnd, &m_pMSWebBrowser);
  		CComBSTR strUrl(L"www.qq.com");
  		m_pMSWebBrowser->Navigate(strUrl);
 
@@ -39,13 +39,14 @@ public:
 
 	LRESULT OnCloseCmd(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	{
+		g_pObject->DestroyBrowser(m_pMSWebBrowser);
+
 		EndDialog(wID);
 		return 0;
 	}
 
 	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 	{
-		pObject->DestroyBrowser(m_pMSWebBrowser);
 		return 0L;
 	}
 

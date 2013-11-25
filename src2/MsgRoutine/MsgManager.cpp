@@ -65,7 +65,7 @@ void MsgManager::OnMessage(COPYDATASTRUCT* lpCopyData)
 
 void MsgManager::PostRemoteMessage(HWND hCommunWnd, const BYTE* lpData, unsigned long len)
 {
-	if(hCommunWnd)
+	if(hCommunWnd && ::IsWindow(hCommunWnd))
 	{
 		BYTE* lpTempData = new BYTE[len];
 		::RtlCopyMemory(lpTempData, lpData, len);
@@ -84,7 +84,7 @@ void MsgManager::PostRemoteMessage(HWND hCommunWnd, const BYTE* lpData, unsigned
 
 void MsgManager::SendRemoteMessage(HWND hCommunWnd, const BYTE* lpData, unsigned long len)
 {
-	if(hCommunWnd)
+	if(hCommunWnd && ::IsWindow(hCommunWnd))
 	{
 		COPYDATASTRUCT data;
 		data.lpData = (LPVOID)lpData;
@@ -144,4 +144,16 @@ void MsgManager::HandleSendData()
 			break;
 		}
 	}
+}
+
+void MsgManager::ClearSendList()
+{
+	::EnterCriticalSection(&m_SendLock);
+	std::list<SendDataItem>::iterator it = m_SendDataList.begin();
+	for(; it != m_SendDataList.end(); it++)
+	{
+		delete []it->lpData;
+	}
+	m_SendDataList.clear();
+	::LeaveCriticalSection(&m_SendLock);
 }

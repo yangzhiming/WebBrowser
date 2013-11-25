@@ -2,7 +2,7 @@
 #include "BrowserWnd.h"
 #include "BrowserComunication.h"
 
-const UINT BrowserWnd::WM_BROWSER_QUIT = ::RegisterWindowMessage(L"WM_BROWSER_QUIT");
+const UINT BrowserWnd::WM_BROWSER_QUIT = WM_USER+3333;
 
 BrowserWnd::BrowserWnd(void)
 {
@@ -22,49 +22,50 @@ HWND BrowserWnd::CreateBrowserWnd(HWND hOwner)
 {
 	CRect rect(200, 200, 800, 600);
 	ATLASSERT(::IsWindow(hOwner));
-	HWND hNewWnd = Create(hOwner, &rect, WebBrowser_CLSID, WS_CLIPSIBLINGS|WS_CHILD, WS_EX_TOOLWINDOW|WS_EX_NOACTIVATE);
+	HWND hNewWnd = Create(hOwner, &rect, WebBrowser_CLSID, WS_CLIPSIBLINGS|WS_POPUP, WS_EX_TOOLWINDOW|WS_EX_NOACTIVATE);
 	return hNewWnd;
 }
 
 void BrowserWnd::DestroyBrowserWnd()
 {
+	ATLASSERT(::IsWindow(m_hWnd));
 	PostMessage(WM_BROWSER_QUIT, 0, 0);
 }
 
 HRESULT BrowserWnd::Navigate(LPCTSTR pstrUrl,int nFlag ,LPCTSTR pTargetName,LPCTSTR pPostData,LPCTSTR pHeader)
 {
-	if (pstrUrl == NULL)
-	{
-		return S_FALSE;
-	}
-
-	CString strUrl = pstrUrl;
-	CComPtr<IWebBrowser2> spWebBrowser2;
-	HRESULT hRet = GetBrowser(&spWebBrowser2);
-	if(SUCCEEDED(hRet) && spWebBrowser2)
-	{
-		CComVariant vtURL(strUrl);
-		CComVariant vtFlag(nFlag);
-		CComVariant vtTargetName;
-		if(pTargetName != NULL)
-		{
-			vtTargetName = pTargetName;
-		}
-		CComVariant vtPostData;
-		if(pPostData != NULL)
-		{
-			vtPostData = pPostData;
-		}
-		CComVariant vtHeader;
-		if(pHeader != NULL)
-		{
-			vtHeader = pHeader;
-		}
-
-		hRet = spWebBrowser2->Navigate2(&vtURL, &vtFlag, &vtTargetName, &vtPostData, &vtHeader);
-	}
-
-	return hRet;
+ 	if (pstrUrl == NULL)
+ 	{
+ 		return S_FALSE;
+ 	}
+ 
+ 	CString strUrl = pstrUrl;
+ 	CComPtr<IWebBrowser2> spWebBrowser2;
+ 	HRESULT hRet = GetBrowser(&spWebBrowser2);
+ 	if(SUCCEEDED(hRet) && spWebBrowser2)
+ 	{
+ 		CComVariant vtURL(strUrl);
+ 		CComVariant vtFlag(nFlag);
+ 		CComVariant vtTargetName;
+ 		if(pTargetName != NULL)
+ 		{
+ 			vtTargetName = pTargetName;
+ 		}
+ 		CComVariant vtPostData;
+ 		if(pPostData != NULL)
+ 		{
+ 			vtPostData = pPostData;
+ 		}
+ 		CComVariant vtHeader;
+ 		if(pHeader != NULL)
+ 		{
+ 			vtHeader = pHeader;
+ 		}
+ 
+ 		hRet = spWebBrowser2->Navigate2(&vtURL, &vtFlag, &vtTargetName, &vtPostData, &vtHeader);
+ 	}
+ 
+ 	return hRet;
 }
 
 HRESULT BrowserWnd::GetBrowser(IWebBrowser2** ppWebBrowser)
@@ -115,11 +116,13 @@ void BrowserWnd::OnTimer(UINT_PTR nIDEvent)
 	if(::IsWindow(wnd))
 	{
 		wnd.GetClientRect(&rc);
+		rc.bottom -= 50;
+		wnd.ClientToScreen(&rc);
 
 		MoveWindow(&rc);
 	}
 	else
 	{
-		ATLASSERT(FALSE);
+	//	ATLASSERT(FALSE);
 	}
 }

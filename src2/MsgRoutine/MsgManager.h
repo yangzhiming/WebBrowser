@@ -32,6 +32,7 @@ public:
 
 protected:
 	void HandleSendData();
+	void ClearSendList();
 
 	static unsigned int __stdcall MsgSendThread(LPVOID param);
 
