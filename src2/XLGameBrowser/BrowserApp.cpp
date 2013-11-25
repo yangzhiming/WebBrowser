@@ -22,7 +22,7 @@ void BrowserApp::InitInstance()
 
 void BrowserApp::ExitInstance()
 {
-
+	BrowserComunication::Instance()->Uninit();
 }
 
 void BrowserApp::Run()

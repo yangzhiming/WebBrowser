@@ -27,6 +27,7 @@ public:
 
 	BEGIN_MSG_MAP(CMainDlg)
 		MESSAGE_HANDLER(WM_TIMER, OnTimer)
+		MESSAGE_HANDLER(WM_CLOSE, OnClose)
 		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
 		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
 		COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
@@ -34,6 +35,7 @@ public:
 		COMMAND_ID_HANDLER(IDCANCEL, OnCancel)
 //		MESSAGE_HANDLER(WM_SIZE, OnSize)
 COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
+COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
 	END_MSG_MAP()
 
 // Handler prototypes (uncomment arguments if needed):
@@ -81,8 +83,7 @@ COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 
 	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 	{
-		// unregister message filtering and idle updates
-		
+		// unregister message filtering and idle updates	
 		CMessageLoop* pLoop = _Module.GetMessageLoop();
 		ATLASSERT(pLoop != NULL);
 		pLoop->RemoveMessageFilter(this);
@@ -134,6 +135,32 @@ COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 			pObject->DestroyBrowser(m_pMSWebBrowser);
 			m_pMSWebBrowser = NULL;
 		}
+
+		return 0L;
+	}
+
+	LRESULT OnBnClickedButton2(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		if(m_pMSWebBrowser)
+		{
+			pObject->DestroyBrowser(m_pMSWebBrowser);
+			m_pMSWebBrowser = NULL;
+		}
+
+		DestroyWindow();
+		::PostQuitMessage(0);
+		return 0L;
+	}
+
+	LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+	{
+		if(m_pMSWebBrowser)
+		{
+			pObject->DestroyBrowser(m_pMSWebBrowser);
+			m_pMSWebBrowser = NULL;
+		}
+
+		bHandled = FALSE;
 
 		return 0L;
 	}

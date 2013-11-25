@@ -31,6 +31,7 @@ void BrowserThreadManager::DestroyBrowserThread(DWORD dwThreadID)
 	if(it != m_BrowserThreadItems.end())
 	{
 		it->second->Destroy();
+		delete it->second;
 		m_BrowserThreadItems.erase(it);
 	}
 }

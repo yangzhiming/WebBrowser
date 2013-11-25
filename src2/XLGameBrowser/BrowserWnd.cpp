@@ -87,14 +87,14 @@ HRESULT BrowserWnd::GetBrowser(IWebBrowser2** ppWebBrowser)
 
 LRESULT BrowserWnd::OnBrowserQuit(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
-	::PostQuitMessage(0);
+	DestroyWindow();
 	SetMsgHandled(TRUE);
 	return 0L;
 }
 
 void BrowserWnd::OnDestroy()
 {
-	//::PostQuitMessage(0);
+	::PostQuitMessage(0);
 }
 
 int BrowserWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)

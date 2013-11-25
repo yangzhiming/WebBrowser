@@ -18,7 +18,7 @@ HRESULT CXLWebBrowserManager::FinalConstruct()
 
 void CXLWebBrowserManager::FinalRelease()
 {
-
+	HostComunication::Instance()->Uninit();
 }
 
 STDMETHODIMP CXLWebBrowserManager::CreateBrowser(LONG dwProcessID, LONG hParentWnd, IXLMSWebBrowser** ppMSWebBrowser)
