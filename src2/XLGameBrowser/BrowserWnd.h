@@ -24,12 +24,14 @@ public:
 		MSG_WM_DESTROY(OnDestroy)
 		MSG_WM_TIMER(OnTimer)
 		MESSAGE_HANDLER(WM_BROWSER_QUIT, OnBrowserQuit)
+		MESSAGE_HANDLER(WM_BROWSER_NAVIGATE, OnBrowserNavigate)
 	END_MSG_MAP()
 
 	int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	void OnDestroy();
 	void OnTimer(UINT_PTR nIDEvent);
 	LRESULT OnBrowserQuit(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+	LRESULT OnBrowserNavigate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
 public:
 
@@ -43,7 +45,9 @@ private:
 	HRESULT GetBrowser(IWebBrowser2** ppWebBrowser);
 
 	static const UINT WM_BROWSER_QUIT;
+	static const UINT WM_BROWSER_NAVIGATE;
 
 private:
 	DWORD m_dwMark;
+	CString m_strNavigateUrl;
 };

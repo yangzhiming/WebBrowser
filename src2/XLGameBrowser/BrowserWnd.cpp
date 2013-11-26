@@ -3,6 +3,7 @@
 #include "BrowserComunication.h"
 
 const UINT BrowserWnd::WM_BROWSER_QUIT = WM_USER+3333;
+const UINT BrowserWnd::WM_BROWSER_NAVIGATE = WM_USER+3334;
 
 BrowserWnd::BrowserWnd(void)
 {
@@ -32,40 +33,13 @@ void BrowserWnd::DestroyBrowserWnd()
 	PostMessage(WM_BROWSER_QUIT, 0, 0);
 }
 
+//这个方法不是线程安全的。。。post到浏览器线程去
 HRESULT BrowserWnd::Navigate(LPCTSTR pstrUrl,int nFlag ,LPCTSTR pTargetName,LPCTSTR pPostData,LPCTSTR pHeader)
 {
- 	if (pstrUrl == NULL)
- 	{
- 		return S_FALSE;
- 	}
- 
- 	CString strUrl = pstrUrl;
- 	CComPtr<IWebBrowser2> spWebBrowser2;
- 	HRESULT hRet = GetBrowser(&spWebBrowser2);
- 	if(SUCCEEDED(hRet) && spWebBrowser2)
- 	{
- 		CComVariant vtURL(strUrl);
- 		CComVariant vtFlag(nFlag);
- 		CComVariant vtTargetName;
- 		if(pTargetName != NULL)
- 		{
- 			vtTargetName = pTargetName;
- 		}
- 		CComVariant vtPostData;
- 		if(pPostData != NULL)
- 		{
- 			vtPostData = pPostData;
- 		}
- 		CComVariant vtHeader;
- 		if(pHeader != NULL)
- 		{
- 			vtHeader = pHeader;
- 		}
- 
- 		hRet = spWebBrowser2->Navigate2(&vtURL, &vtFlag, &vtTargetName, &vtPostData, &vtHeader);
- 	}
- 
- 	return hRet;
+	m_strNavigateUrl = pstrUrl;
+ 	PostMessage(WM_BROWSER_NAVIGATE, 0, 0);
+
+	return 0L;
 }
 
 HRESULT BrowserWnd::GetBrowser(IWebBrowser2** ppWebBrowser)
@@ -78,12 +52,42 @@ HRESULT BrowserWnd::GetBrowser(IWebBrowser2** ppWebBrowser)
 
 	*ppWebBrowser = NULL;
 
-	//CAxWindow wnd = m_hWnd;
+	CAxWindow wnd = m_hWnd;
 	CComPtr<IWebBrowser2> spWebBrowser;
 	HRESULT hRet = this->QueryControl(IID_IWebBrowser2, (void**)&spWebBrowser);
 	ATLASSERT(SUCCEEDED(hRet));
 
 	return spWebBrowser.CopyTo(ppWebBrowser);
+}
+
+LRESULT BrowserWnd::OnBrowserNavigate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+{
+	CComPtr<IWebBrowser2> spWebBrowser2;
+	HRESULT hRet = GetBrowser(&spWebBrowser2);
+	if(SUCCEEDED(hRet) && spWebBrowser2)
+	{
+		CComVariant vtURL(m_strNavigateUrl);
+		CComVariant vtFlag(0);
+		CComVariant vtTargetName;
+// 		if(pTargetName != NULL)
+// 		{
+// 			vtTargetName = pTargetName;
+// 		}
+ 		CComVariant vtPostData;
+// 		if(pPostData != NULL)
+// 		{
+// 			vtPostData = pPostData;
+// 		}
+ 		CComVariant vtHeader;
+// 		if(pHeader != NULL)
+// 		{
+// 			vtHeader = pHeader;
+// 		}
+
+		hRet = spWebBrowser2->Navigate2(&vtURL, &vtFlag, &vtTargetName, &vtPostData, &vtHeader);
+	}
+
+	return 0L;
 }
 
 LRESULT BrowserWnd::OnBrowserQuit(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
