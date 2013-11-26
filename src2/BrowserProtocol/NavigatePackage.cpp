@@ -25,14 +25,14 @@ size_t NavigatePackage::DecodeLogicBody(const BYTE* pBuffer,size_t len)
 	int readlen = 0;
 
 	readlen = ByteStream::ReadString(pBuffer+nowpos,m_strUrl,len-nowpos-sizeof(DWORD));
-	if(readlen <= 0)
+	if(readlen < 0)
 	{
 		return -1;
 	}
 	nowpos += readlen;
 
 	readlen = ByteStream::ReadDword(pBuffer+nowpos, (DWORD&)m_dwThreadID,sizeof(DWORD));
-	if(readlen <= 0)
+	if(readlen < 0)
 	{
 		return -1;
 	}
