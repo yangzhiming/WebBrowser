@@ -12,6 +12,10 @@ IXLWebBrowserManager * g_pObject = NULL;
 class CAboutDlg : public CDialogImpl<CAboutDlg>
 {
 public:
+	CAboutDlg(DWORD dwProcessID)
+	{
+		m_dwProcessID = dwProcessID;
+	}
 	enum { IDD = IDD_ABOUTBOX };
 
 	BEGIN_MSG_MAP(CAboutDlg)
@@ -30,8 +34,8 @@ public:
 	{
 		CenterWindow(GetParent());
  
- 		g_pObject->CreateBrowser(0, (LONG)m_hWnd, &m_pMSWebBrowser);
- 		CComBSTR strUrl(L"www.qq.com");
+ 		g_pObject->CreateBrowser(m_dwProcessID, (LONG)m_hWnd, &m_pMSWebBrowser);
+ 		CComBSTR strUrl(L"www.baidu.com");
  		m_pMSWebBrowser->Navigate(strUrl);
 
 		return TRUE;
@@ -52,4 +56,5 @@ public:
 
 private:
 	IXLMSWebBrowser* m_pMSWebBrowser;
+	DWORD m_dwProcessID;
 };

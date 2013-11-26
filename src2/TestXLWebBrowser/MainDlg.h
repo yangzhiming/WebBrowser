@@ -36,6 +36,7 @@ public:
 //		MESSAGE_HANDLER(WM_SIZE, OnSize)
 COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
+COMMAND_HANDLER(IDC_BUTTON3, BN_CLICKED, OnBnClickedButton3)
 	END_MSG_MAP()
 
 // Handler prototypes (uncomment arguments if needed):
@@ -73,8 +74,9 @@ COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
  		}
  
  		g_pObject->CreateBrowser(0, (LONG)m_hWnd, &m_pMSWebBrowser);
- 		CComBSTR strUrl(L"www.baidu.com");
- 		m_pMSWebBrowser->Navigate(strUrl);
+ 		
+		CComBSTR strUrl(L"www.baidu.com");
+		m_pMSWebBrowser->Navigate(strUrl);
 
 //		SetTimer(23232, 15000, NULL);
 
@@ -94,7 +96,9 @@ COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
 
 	LRESULT OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	{
-		CAboutDlg dlg;
+		int dwProcessID;
+		dwProcessID = GetDlgItemInt(IDC_EDIT2);
+		CAboutDlg dlg(dwProcessID);
 		dlg.DoModal();
 		return 0;
 	}
@@ -131,7 +135,9 @@ COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
 // 	}
 	LRESULT OnBnClickedButton1(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	{
-		CAboutDlg dlg;
+		int dwProcessID;
+		dwProcessID = GetDlgItemInt(IDC_EDIT2);
+		CAboutDlg dlg(dwProcessID);
 		dlg.DoModal();
 		return 0L;
 	}
@@ -172,6 +178,18 @@ COMMAND_HANDLER(IDC_BUTTON2, BN_CLICKED, OnBnClickedButton2)
 
 		bHandled = FALSE;
 
+		return 0L;
+	}
+
+	LRESULT OnBnClickedButton3(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		if(m_pMSWebBrowser)
+		{
+			CString strUrl;
+			GetDlgItemText(IDC_EDIT1, strUrl);
+			CComBSTR strBstr = strUrl;
+			m_pMSWebBrowser->Navigate(strBstr);
+		}
 		return 0L;
 	}
 

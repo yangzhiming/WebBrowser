@@ -11,6 +11,9 @@ size_t SizeOfString(const std::string& src)
 
 size_t ReadString(const BYTE* pos, std::string& dst, size_t len)
 {
+	if(len == 0)
+		return 0;
+
 	dst.assign((const char*)pos, len);
 	return len;
 }

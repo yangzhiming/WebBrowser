@@ -105,8 +105,6 @@ BOOL CXLMSWebBrowser::CreateBrowserInProcess(LONG dwProcessID, HWND hParentWnd)
 	m_dwState = ProcessCreated;
 	m_dwProcessID = dwProcessID;
 	m_hParentWnd = hParentWnd;
-	m_dwMark = GetNextMarkCookie();
-	HostComunication::Instance()->NotifyBrowserCreateAndNavigate(m_dwProcessID, m_hParentWnd, m_dwMark, m_strToNavigate);
 
 	return TRUE;
 }
@@ -134,6 +132,8 @@ STDMETHODIMP CXLMSWebBrowser::Navigate(BSTR url)
 		{
 			//此处可能threadid尚未返回，需继续写代码保证
 			m_bWaitForBrowserCreate = TRUE;
+			m_dwMark = GetNextMarkCookie();
+			HostComunication::Instance()->NotifyBrowserCreateAndNavigate(m_dwProcessID, m_hParentWnd, m_dwMark, m_strToNavigate);
 		}
 		break;
 	case BrowserCreated:
@@ -181,10 +181,10 @@ void CXLMSWebBrowser::OnBrowserCreated(DWORD dwThreadID)
 {
 	m_dwThreadID = dwThreadID;
 	m_dwState = BrowserCreated;
-
-	if(m_bWaitForBrowserCreate)
-	{
-		HostComunication::Instance()->NotifyBrowserNavigate(m_dwProcessID, m_dwThreadID, m_strToNavigate);
-		m_bWaitForBrowserCreate = FALSE;
-	}
+// 
+// 	if(m_bWaitForBrowserCreate)
+// 	{
+// 		HostComunication::Instance()->NotifyBrowserNavigate(m_dwProcessID, m_dwThreadID, m_strToNavigate);
+// 		m_bWaitForBrowserCreate = FALSE;
+// 	}
 }
