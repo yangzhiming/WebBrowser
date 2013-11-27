@@ -23,6 +23,7 @@ public:
 		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
 		COMMAND_ID_HANDLER(IDOK, OnCloseCmd)
 		COMMAND_ID_HANDLER(IDCANCEL, OnCloseCmd)
+		COMMAND_HANDLER(IDC_BUTTON1, BN_CLICKED, OnBnClickedButton1)
 	END_MSG_MAP()
 
 // Handler prototypes (uncomment arguments if needed):
@@ -57,4 +58,14 @@ public:
 private:
 	IXLMSWebBrowser* m_pMSWebBrowser;
 	DWORD m_dwProcessID;
+public:
+	LRESULT OnBnClickedButton1(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		CString strUrl;
+		GetDlgItemText(IDC_EDIT1, strUrl);
+		CComBSTR bstr = strUrl;
+		m_pMSWebBrowser->Navigate(bstr);
+
+		return 0L;
+	}
 };

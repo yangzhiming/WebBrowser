@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="XLWebBrowser"
 	ProjectGUID="{E6F61287-971B-495C-B3A9-72D8C941FB06}"
+	RootNamespace="XLWebBrowser"
 	Keyword="AtlProj"
 	TargetFrameworkVersion="196613"
 	>
@@ -108,7 +109,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(ConfigurationName)"
+			OutputDirectory="..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfATL="2"
@@ -165,7 +166,9 @@
 				Name="VCLinkerTool"
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
+				AdditionalDependencies="MsgRoutine.lib BrowserProtocol.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="../bin"
 				ModuleDefinitionFile=".\XLWebBrowser.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"

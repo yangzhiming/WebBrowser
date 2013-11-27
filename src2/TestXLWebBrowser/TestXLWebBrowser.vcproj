@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="TestXLWebBrowser"
 	ProjectGUID="{10A0D6D6-8545-47FB-8152-85B40D09593E}"
+	RootNamespace="TestXLWebBrowser"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -102,7 +103,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
+			OutputDirectory="..\bin"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
 			ATLMinimizesCRunTimeLibraryUsage="true"
@@ -136,7 +137,7 @@
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG"
 				ExceptionHandling="0"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="0"
@@ -155,7 +156,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="XLWebBrowser.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="../bin"
 				SubSystem="2"
 				TargetMachine="1"
 			/>
