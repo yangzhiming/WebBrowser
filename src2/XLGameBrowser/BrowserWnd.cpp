@@ -95,6 +95,8 @@ LRESULT BrowserWnd::OnBrowserQuit(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL&
 	//use destroy window without 'WS_EX_NOPARENTNOTIFY' will bring dead lock, for its parent is in other process.
 	//If the window being destroyed is a child window that does not have the WS_EX_NOPARENTNOTIFY style, a WM_PARENTNOTIFY message is sent to the parent.
 	//sendmessage will block..  so specify 'WS_EX_NOPARENTNOTIFY' is important
+	//注：因为DestroyWindow如果未指定WS_EX_NOPARENTNOTIFY的话，会SendMessage到父窗口
+	//而父窗口有可能也在反初始化中，根本处理不了此消息。那么发送就会阻塞。。造成死锁
 	DestroyWindow();
 	SetMsgHandled(TRUE);
 	return 0L;
