@@ -23,7 +23,7 @@ HWND BrowserWnd::CreateBrowserWnd(HWND hOwner)
 {
 	CRect rect(200, 200, 800, 600);
 	ATLASSERT(::IsWindow(hOwner));
-	HWND hNewWnd = Create(hOwner, &rect, WebBrowser_CLSID, WS_CLIPSIBLINGS|WS_POPUP, WS_EX_TOOLWINDOW|WS_EX_NOACTIVATE);
+	HWND hNewWnd = Create(hOwner, &rect, WebBrowser_CLSID, WS_CLIPSIBLINGS|WS_CHILD, WS_EX_TOOLWINDOW|WS_EX_NOACTIVATE|WS_EX_NOPARENTNOTIFY);
 	return hNewWnd;
 }
 
@@ -92,6 +92,9 @@ LRESULT BrowserWnd::OnBrowserNavigate(UINT uMsg, WPARAM wParam, LPARAM lParam, B
 
 LRESULT BrowserWnd::OnBrowserQuit(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
+	//use destroy window without 'WS_EX_NOPARENTNOTIFY' will bring dead lock, for its parent is in other process.
+	//If the window being destroyed is a child window that does not have the WS_EX_NOPARENTNOTIFY style, a WM_PARENTNOTIFY message is sent to the parent.
+	//sendmessage will block..  so specify 'WS_EX_NOPARENTNOTIFY' is important
 	DestroyWindow();
 	SetMsgHandled(TRUE);
 	return 0L;
@@ -120,13 +123,16 @@ void BrowserWnd::OnTimer(UINT_PTR nIDEvent)
 	if(::IsWindow(wnd))
 	{
 		wnd.GetClientRect(&rc);
-		rc.bottom -= 50;
-		wnd.ClientToScreen(&rc);
-
+		rc.bottom -= 80;
 		MoveWindow(&rc);
-	}
-	else
-	{
-	//	ATLASSERT(FALSE);
+
+		if(::IsWindowVisible(wnd))
+		{
+			ShowWindow(SW_SHOW);
+		}
+		else
+		{
+			ShowWindow(SW_HIDE);
+		}
 	}
 }
